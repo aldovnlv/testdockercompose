@@ -1,0 +1,47 @@
+services:
+  moodle_test:
+    hostname: moodle_test
+    container_name: moodle_test
+    image: debian:12.1
+    ports:
+      - "9090:80"
+    restart: unless-stopped
+    command:
+      - /bin/bash
+      - -c
+      - |
+        export DEBIAN_FRONTEND=noninteractive
+        ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+        apt -y update
+        apt install -y cron git apache2 iproute2 php php-{curl,zip,mysqli,xml,mbstring,gd,intl,soap}
+        sed -i 's/^;max_input_vars *= *1000/max_input_vars = 5000/' /etc/php/8.2/apache2/php.ini
+        echo apache max_input_vars = 5000
+        : echo "max_input_vars = 5000" |  tee -a "$(php --ini | grep 'Loaded Configuration File' | awk '{print $4}')"
+        service apache2 start
+        tail -F keep.alive
+
+### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
+  test_mdb:
+    container_name: test_mdb
+    hostname: test_mdb
+    #image: mariadb:10.11.13
+    image: debian:12.1
+    ports:
+      - "65000:3306"
+    
+    command:
+        - bash
+        - -c
+        - |
+          export DEBIAN_FRONTEND=noninteractive
+          ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+          apt update -y
+          apt install -y mariadb-server
+          mkdir -p /var/log/mysql/
+          chown mysql:mysql /var/log/mysql/
+          service mariadb restart
+          date
+          tail -F /var/log/mysql/*
+
+volumes:
+  mysql_data:
