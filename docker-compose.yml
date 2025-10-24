@@ -21,9 +21,9 @@ services:
         tail -F keep.alive
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_db:
-    container_name: sigefve_db
-    hostname: sigefve_db
+  sigefve_java_db:
+    container_name: sigefve_java_db
+    hostname: sigefve_java_db
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
