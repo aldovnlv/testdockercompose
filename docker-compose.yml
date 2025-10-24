@@ -1,10 +1,10 @@
 services:
-  moodle_test:
-    hostname: moodle_test
-    container_name: moodle_test
+  sigefve_web:
+    hostname: sigefve_web
+    container_name: sigefve_web
     image: debian:12.1
     ports:
-      - "9090:80"
+      - "9191:80"
     restart: unless-stopped
     command:
       - /bin/bash
@@ -21,13 +21,13 @@ services:
         tail -F keep.alive
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  test_mdb:
-    container_name: test_mdb
-    hostname: test_mdb
+  sigefve_db:
+    container_name: sigefve_db
+    hostname: sigefve_db
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
-      - "65000:3306"
+      - "9292:3306"
     
     command:
         - bash
