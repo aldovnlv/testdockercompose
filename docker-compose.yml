@@ -43,9 +43,6 @@ services:
           date
           tail -F /var/log/mysql/*
 
-volumes:
-  mysql_data:
-
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
   sigefve_java_module:
     container_name: sigefve_java_module
