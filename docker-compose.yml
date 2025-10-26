@@ -65,13 +65,13 @@ services:
           tail -F /var/log/mysql/*
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_java_module:
-    container_name: sigefve_java_module
-    hostname: sigefve_java_module
+  sigefve_frontend:
+    container_name: sigefve_frontend
+    hostname: sigefve_frontend
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
-      - "9293:3306"
+      - "9293:80"
     
     command:
         - bash
@@ -82,6 +82,7 @@ services:
           apt update -y
           apt install -y apache2
           rm -f /var/www/html/index.html
+          service apache2 start
           tail -F /var/log/mysql/*
 
 volumes:
