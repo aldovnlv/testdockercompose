@@ -1,7 +1,7 @@
 services:
-  sigefve_web:
-    hostname: sigefve_web
-    container_name: sigefve_web
+  sigefve_test_web:
+    hostname: sigefve_test_web
+    container_name: sigefve_test_web
     image: debian:12.1
     ports:
       - "9191:80"
@@ -21,9 +21,9 @@ services:
         tail -F keep.alive
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_java_db:
-    container_name: sigefve_java_db
-    hostname: sigefve_java_db
+  sigefve_test_java_db:
+    container_name: sigefve_test_java_db
+    hostname: sigefve_test_java_db
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
@@ -44,9 +44,9 @@ services:
           tail -F /var/log/mysql/*
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_java_module:
-    container_name: sigefve_java_module
-    hostname: sigefve_java_module
+  sigefve_test_java_module:
+    container_name: sigefve_test_java_module
+    hostname: sigefve_test_java_module
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
@@ -65,9 +65,9 @@ services:
           tail -F /var/log/mysql/*
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_frontend:
-    container_name: sigefve_frontend
-    hostname: sigefve_frontend
+  sigefve_test_frontend:
+    container_name: sigefve_test_frontend
+    hostname: sigefve_test_frontend
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
