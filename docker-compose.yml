@@ -27,7 +27,7 @@ services:
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
-      - "9292:3306"
+      - "9992:3306"
     
     command:
         - bash
@@ -50,7 +50,7 @@ services:
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
-      - "9292:3306"
+      - "9993:3306"
     
     command:
         - bash
@@ -71,7 +71,7 @@ services:
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
-      - "9293:80"
+      - "9994:80"
     
     command:
         - bash
