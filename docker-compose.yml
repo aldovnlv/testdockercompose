@@ -140,7 +140,7 @@ services:
     volumes:
       - ./moodle_app:/root/moodle
       - ./moodledata:/var/www/moodledata
-      - ./html:/var/www/html
+      - /home/debian/docker-apps/portainer/portainer_data/compose/2/html:/var/www/html
       - ./ailv:/var/www/datacita
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
