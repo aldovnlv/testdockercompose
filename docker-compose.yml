@@ -138,8 +138,8 @@ services:
         date
         tail -F keep.alive
     volumes:
-      - ./moodle_app:/root/moodle
-      - ./moodledata:/var/www/moodledata
+      - ${SIGEFVE_VOLUMES}/moodle_app:/root/moodle
+      - ${SIGEFVE_VOLUMES}/moodledata:/var/www/moodledata
       - ${SIGEFVE_VOLUMES}/html:/var/www/html
       - ${SIGEFVE_VOLUMES}/ailv:/var/www/datacita
 
