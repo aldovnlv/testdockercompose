@@ -1,11 +1,113 @@
+# services:
+#   sigefve_test_web:
+#     hostname: sigefve_test_web
+#     container_name: sigefve_test_web
+#     image: debian:12.1
+#     ports:
+#       - "9191:80"
+#     restart: unless-stopped
+#     command:
+#       - /bin/bash
+#       - -c
+#       - |
+#         export DEBIAN_FRONTEND=noninteractive
+#         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+#         apt -y update
+#         apt install -y cron git apache2 iproute2 php php-{curl,zip,mysqli,xml,mbstring,gd,intl,soap}
+#         sed -i 's/^;max_input_vars *= *1000/max_input_vars = 5000/' /etc/php/8.2/apache2/php.ini
+#         echo apache max_input_vars = 5000
+#         : echo "max_input_vars = 5000" |  tee -a "$(php --ini | grep 'Loaded Configuration File' | awk '{print $4}')"
+#         service apache2 start
+#         tail -F keep.alive
+
+# ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
+#   sigefve_test_java_db:
+#     container_name: sigefve_test_java_db
+#     hostname: sigefve_test_java_db
+#     #image: mariadb:10.11.13
+#     image: debian:12.1
+#     ports:
+#       - "9992:3306"
+    
+#     command:
+#         - bash
+#         - -c
+#         - |
+#           export DEBIAN_FRONTEND=noninteractive
+#           ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+#           apt update -y
+#           apt install -y mariadb-server
+#           mkdir -p /var/log/mysql/
+#           chown mysql:mysql /var/log/mysql/
+#           service mariadb restart
+#           date
+#           tail -F /var/log/mysql/*
+
+# ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
+#   sigefve_test_java_module:
+#     container_name: sigefve_test_java_module
+#     hostname: sigefve_test_java_module
+#     #image: mariadb:10.11.13
+#     image: debian:12.1
+#     ports:
+#       - "9993:3306"
+    
+#     command:
+#         - bash
+#         - -c
+#         - |
+#           export DEBIAN_FRONTEND=noninteractive
+#           ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+#           apt update -y
+#           apt install -y openjdk-8-jdk
+#           which javac
+#           which java
+#           tail -F /var/log/mysql/*
+
+# ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
+#   sigefve_test_frontend:
+#     container_name: sigefve_test_frontend
+#     hostname: sigefve_test_frontend
+#     #image: mariadb:10.11.13
+#     image: debian:12.1
+#     ports:
+#       - "9994:80"
+#     # crea un bind volume desde la ubicacion ./webapp a la carpeta /var/www/html
+#     volumes:
+#       - ./webapp:/var/www/html
+    
+#     command:
+#         - bash
+#         - -c
+#         - |
+#           export DEBIAN_FRONTEND=noninteractive
+#           ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+#           apt update -y
+#           apt install -y apache2
+#           rm -f /var/www/html/index.html
+#           echo working from .yml
+#           service apache2 start
+#           tail -F /var/log/mysql/*
+
+# volumes:
+#   mysql_data:
+
+
+
+
+
+
+
 services:
-  sigefve_test_web:
-    hostname: sigefve_test_web
-    container_name: sigefve_test_web
+  another_test_moodle:
+    hostname: another_test_moodle
+    container_name: another_test_moodle
     image: debian:12.1
     ports:
-      - "9191:80"
+      - "9990:80"
     restart: unless-stopped
+    depends_on:
+      - test_mdb
     command:
       - /bin/bash
       - -c
@@ -18,17 +120,41 @@ services:
         echo apache max_input_vars = 5000
         : echo "max_input_vars = 5000" |  tee -a "$(php --ini | grep 'Loaded Configuration File' | awk '{print $4}')"
         service apache2 start
+        cd
+        git clone git://git.moodle.org/moodle.git
+        cd moodle
+        git branch -a
+        git checkout MOODLE_500_STABLE
+        cd ..
+        cp -r moodle /var/www/html/
+        chown -R www-data:www-data /var/www/html/moodle
+        chmod -R 0755 /var/www/html/moodle
+        pwd
+        ls
+        cd /var/www/
+        chown www-data:www-data /var/www/moodledata
+        chmod 0777 /var/www/moodledata
+        date
         tail -F keep.alive
+    volumes:
+      - ./moodle_app:/root/moodle
+      - ./moodledata:/var/www/moodledata
+      - ./html:/var/www/html
 
 ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_test_java_db:
-    container_name: sigefve_test_java_db
-    hostname: sigefve_test_java_db
+  another_database:
+    container_name: another_database
+    hostname: another_database
     #image: mariadb:10.11.13
     image: debian:12.1
     ports:
-      - "9992:3306"
-    
+      - "63306:3306"
+    volumes:
+      - ./bind.cnf:/etc/mysql/mariadb.conf.d/70-aldo.cnf
+      - mysql_data:/var/lib/mysql
+#    environment:
+#      - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
+    #command: tail -F error.log
     command:
         - bash
         - -c
@@ -41,52 +167,6 @@ services:
           chown mysql:mysql /var/log/mysql/
           service mariadb restart
           date
-          tail -F /var/log/mysql/*
-
-### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_test_java_module:
-    container_name: sigefve_test_java_module
-    hostname: sigefve_test_java_module
-    #image: mariadb:10.11.13
-    image: debian:12.1
-    ports:
-      - "9993:3306"
-    
-    command:
-        - bash
-        - -c
-        - |
-          export DEBIAN_FRONTEND=noninteractive
-          ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
-          apt update -y
-          apt install -y openjdk-8-jdk
-          which javac
-          which java
-          tail -F /var/log/mysql/*
-
-### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
-  sigefve_test_frontend:
-    container_name: sigefve_test_frontend
-    hostname: sigefve_test_frontend
-    #image: mariadb:10.11.13
-    image: debian:12.1
-    ports:
-      - "9994:80"
-    # crea un bind volume desde la ubicacion ./webapp a la carpeta /var/www/html
-    volumes:
-      - ./webapp:/var/www/html
-    
-    command:
-        - bash
-        - -c
-        - |
-          export DEBIAN_FRONTEND=noninteractive
-          ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
-          apt update -y
-          apt install -y apache2
-          rm -f /var/www/html/index.html
-          echo working from .yml
-          service apache2 start
           tail -F /var/log/mysql/*
 
 volumes:
