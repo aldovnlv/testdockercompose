@@ -72,6 +72,9 @@ services:
     image: debian:12.1
     ports:
       - "9994:80"
+    # crea un bind volume desde la ubicacion ./webapp a la carpeta /var/www/html
+    volumes:
+      - ./webapp:/var/www/html
     
     command:
         - bash
@@ -82,7 +85,7 @@ services:
           apt update -y
           apt install -y apache2
           rm -f /var/www/html/index.html
-          echo working drom .yml > /var/www/html/index.html
+          echo working from .yml
           service apache2 start
           tail -F /var/log/mysql/*
 
