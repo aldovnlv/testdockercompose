@@ -107,7 +107,7 @@ services:
       - "9990:80"
     restart: unless-stopped
     depends_on:
-      - test_mdb
+      - another_database
     command:
       - /bin/bash
       - -c
