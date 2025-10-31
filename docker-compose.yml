@@ -182,24 +182,6 @@ services:
         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
         apt -y update
         apt install -y install -y default-jdk
-        sed -i 's/^;max_input_vars *= *1000/max_input_vars = 5000/' /etc/php/8.2/apache2/php.ini
-        echo apache max_input_vars = 5000
-        : echo "max_input_vars = 5000" |  tee -a "$(php --ini | grep 'Loaded Configuration File' | awk '{print $4}')"
-        cd
-        git clone git://git.moodle.org/moodle.git
-        cd moodle
-        git branch -a
-        git checkout MOODLE_500_STABLE
-        cd ..
-        cp -r moodle /var/www/html/
-        chown -R www-data:www-data /var/www/html/moodle
-        chmod -R 0755 /var/www/html/moodle
-        pwd
-        ls
-        mkdir /var/www/datacita
-        cd /var/www/
-        chown www-data:www-data /var/www/moodledata
-        chmod 0777 /var/www/moodledata
         date
         echo */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
         cd /root/java
