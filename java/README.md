@@ -317,14 +317,14 @@ El simulador considera:
 docker-compose up --build
 ```
 
-El servicio estará disponible en `http://localhost:8080`
+El servicio estará disponible en `http://localhost:8585`
 
 #### Opción 2: Ejecución Local
 
 1. **Requisitos previos**:
    - Java 17 o superior
    - Maven 3.6+
-   - PostgreSQL 15+ corriendo en localhost:5432
+   - PostgreSQL 15+ corriendo en localhost:54302
 
 2. **Configurar PostgreSQL**:
 ```bash
@@ -334,10 +334,10 @@ CREATE DATABASE sigefve;
 
 3. **Configurar variables de entorno** (opcional):
 ```bash
-export DB_URL=jdbc:postgresql://localhost:5432/sigefve
+export DB_URL=jdbc:postgresql://localhost:54302/sigefve
 export DB_USER=postgres
 export DB_PASSWORD=postgres
-export JAVA_PORT=8080
+export JAVA_PORT=8585
 ```
 
 4. **Compilar el proyecto**:
@@ -378,17 +378,17 @@ Esto creará:
 
 **Listar todos los vehículos**:
 ```bash
-curl http://localhost:8080/vehiculos
+curl http://localhost:8585/vehiculos
 ```
 
 **Obtener vehículo específico**:
 ```bash
-curl http://localhost:8080/vehiculos/1
+curl http://localhost:8585/vehiculos/1
 ```
 
 **Crear un nuevo vehículo**:
 ```bash
-curl -X POST http://localhost:8080/vehiculos \
+curl -X POST http://localhost:8585/vehiculos \
   -H "Content-Type: application/json" \
   -d '{
     "tipo": "MOTO_ELECTRICA",
@@ -404,19 +404,19 @@ curl -X POST http://localhost:8080/vehiculos \
 
 **Cambiar estado de vehículo**:
 ```bash
-curl -X PUT http://localhost:8080/vehiculos/1/estado \
+curl -X PUT http://localhost:8585/vehiculos/1/estado \
   -H "Content-Type: application/json" \
   -d '{"estado": "CARGANDO"}'
 ```
 
 **Obtener telemetría actual**:
 ```bash
-curl http://localhost:8080/telemetria/vehiculo/1/ultima
+curl http://localhost:8585/telemetria/vehiculo/1/ultima
 ```
 
 **Asignar vehículo a ruta**:
 ```bash
-curl -X PUT http://localhost:8080/rutas/1/asignar \
+curl -X PUT http://localhost:8585/rutas/1/asignar \
   -H "Content-Type: application/json" \
   -d '{"vehiculoId": 1}'
 ```
@@ -431,11 +431,11 @@ El módulo Python puede consultar directamente los endpoints del módulo Java:
 import requests
 
 # Obtener todos los vehículos
-response = requests.get('http://java-service:8080/vehiculos')
+response = requests.get('http://java-service:8585/vehiculos')
 vehiculos = response.json()
 
 # Obtener telemetría de un vehículo
-response = requests.get('http://java-service:8080/telemetria/vehiculo/1')
+response = requests.get('http://java-service:8585/telemetria/vehiculo/1')
 telemetria = response.json()
 ```
 
@@ -451,15 +451,15 @@ El API Gateway debe enrutar las peticiones al módulo Java:
 ```go
 // Ejemplo de proxy en Go (Gin)
 router.Any("/api/vehiculos/*path", func(c *gin.Context) {
-    targetURL := "http://java-service:8080" + c.Request.URL.Path
+    targetURL := "http://java-service:8585" + c.Request.URL.Path
     // ... implementar proxy reverso
 })
 ```
 
 **Rutas a proxear desde Go**:
-- `/api/vehiculos/*` → `http://java-service:8080/vehiculos/*`
-- `/api/telemetria/*` → `http://java-service:8080/telemetria/*`
-- `/api/rutas/*` → `http://java-service:8080/rutas/*`
+- `/api/vehiculos/*` → `http://java-service:8585/vehiculos/*`
+- `/api/telemetria/*` → `http://java-service:8585/telemetria/*`
+- `/api/rutas/*` → `http://java-service:8585/rutas/*`
 
 ### Estructura de Directorios del Proyecto
 
@@ -489,10 +489,10 @@ sigefve-java/
 
 | Variable | Descripción | Valor por Defecto |
 |----------|-------------|-------------------|
-| `DB_URL` | URL de conexión a PostgreSQL | `jdbc:postgresql://localhost:5432/sigefve` |
+| `DB_URL` | URL de conexión a PostgreSQL | `jdbc:postgresql://localhost:54302/sigefve` |
 | `DB_USER` | Usuario de PostgreSQL | `postgres` |
 | `DB_PASSWORD` | Contraseña de PostgreSQL | `postgres` |
-| `JAVA_PORT` | Puerto del servidor HTTP | `8080` |
+| `JAVA_PORT` | Puerto del servidor HTTP | `8585` |
 
 ### Solución de Problemas
 
@@ -501,9 +501,9 @@ sigefve-java/
 - Verificar las credenciales en las variables de entorno
 - Si usas Docker, verificar que el servicio `postgres` esté healthy
 
-**Error: "Puerto 8080 ya está en uso"**
+**Error: "Puerto 8585 ya está en uso"**
 - Cambiar el puerto usando la variable `JAVA_PORT`
-- O detener el proceso que está usando el puerto 8080
+- O detener el proceso que está usando el puerto 8585
 
 **El simulador no genera telemetría**
 - Verificar que haya vehículos en la base de datos
@@ -523,12 +523,12 @@ Iniciando SIGEFVE - Módulo Java
 ═══════════════════════════════════════
 Conectando a PostgreSQL...
 Esquema de base de datos inicializado correctamente
-Servidor HTTP iniciado en puerto 8080
+Servidor HTTP iniciado en puerto 8585
 Iniciando simulador de telemetría...
 Simulador iniciado. Generando telemetría cada 15 segundos...
 ═══════════════════════════════════════
 SIGEFVE - Módulo Java en ejecución
-API disponible en: http://localhost:8080
+API disponible en: http://localhost:8585
 ═══════════════════════════════════════
 
 [VAN-001] Batería: 85.5% | Temp: 42.3°C | Km: 1250.45

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConfiguracionBaseDatos {
-    private static final String URL = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://localhost:5432/sigefve");
+    private static final String URL = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://localhost:54302/sigefve");
     private static final String USUARIO = System.getenv().getOrDefault("DB_USER", "postgres");
     private static final String CONTRASENA = System.getenv().getOrDefault("DB_PASSWORD", "postgres");
     

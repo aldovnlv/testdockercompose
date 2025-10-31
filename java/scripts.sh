@@ -37,8 +37,8 @@ docker_build() {
 # Ejecutar contenedor
 docker_run() {
     echo "Ejecutando contenedor..."
-    docker run -p 8080:8080 \
-        -e DB_URL=jdbc:postgresql://host.docker.internal:5432/sigefve \
+    docker run -p 8585:8585 \
+        -e DB_URL=jdbc:postgresql://host.docker.internal:54302/sigefve \
         -e DB_USER=postgres \
         -e DB_PASSWORD=postgres \
         sigefve-java:latest
@@ -99,26 +99,26 @@ test() {
 # Prueba de salud del servicio
 health_check() {
     echo "Verificando salud del servicio..."
-    curl -s http://localhost:8080/health | jq
+    curl -s http://localhost:8585/health | jq
 }
 
 # Listar vehículos
 list_vehicles() {
     echo "Listando vehículos..."
-    curl -s http://localhost:8080/vehiculos | jq
+    curl -s http://localhost:8585/vehiculos | jq
 }
 
 # Obtener telemetría de vehículo
 get_telemetry() {
     local vehicle_id=${1:-1}
     echo "Obteniendo telemetría del vehículo $vehicle_id..."
-    curl -s "http://localhost:8080/telemetria/vehiculo/$vehicle_id/ultima" | jq
+    curl -s "http://localhost:8585/telemetria/vehiculo/$vehicle_id/ultima" | jq
 }
 
 # Listar rutas activas
 list_routes() {
     echo " Listando rutas activas..."
-    curl -s http://localhost:8080/rutas | jq
+    curl -s http://localhost:8585/rutas | jq
 }
 
 # ==================== DESARROLLO ====================
@@ -150,7 +150,7 @@ monitor_telemetry() {
         clear
         date
         echo "================================"
-        curl -s http://localhost:8080/vehiculos | jq '.[] | {placa, estado, kilometrajeTotal}'
+        curl -s http://localhost:8585/vehiculos | jq '.[] | {placa, estado, kilometrajeTotal}'
         sleep 5
     done
 }
@@ -182,7 +182,7 @@ db_stats() {
 # Crear vehículo de ejemplo
 create_sample_vehicle() {
     echo "Creando vehículo de ejemplo..."
-    curl -X POST http://localhost:8080/vehiculos \
+    curl -X POST http://localhost:8585/vehiculos \
         -H "Content-Type: application/json" \
         -d '{
             "tipo": "MOTO_ELECTRICA",
@@ -201,7 +201,7 @@ change_vehicle_state() {
     local vehicle_id=${1:-1}
     local state=${2:-DISPONIBLE}
     echo "Cambiando estado del vehículo $vehicle_id a $state..."
-    curl -X PUT "http://localhost:8080/vehiculos/$vehicle_id/estado" \
+    curl -X PUT "http://localhost:8585/vehiculos/$vehicle_id/estado" \
         -H "Content-Type: application/json" \
         -d "{\"estado\": \"$state\"}" | jq
 }
@@ -209,7 +209,7 @@ change_vehicle_state() {
 # Crear ruta de ejemplo
 create_sample_route() {
     echo " Creando ruta de ejemplo..."
-    curl -X POST http://localhost:8080/rutas \
+    curl -X POST http://localhost:8585/rutas \
         -H "Content-Type: application/json" \
         -d '{
             "nombre": "Ruta de Prueba",
@@ -222,7 +222,7 @@ assign_vehicle_to_route() {
     local route_id=${1:-1}
     local vehicle_id=${2:-1}
     echo "Asignando vehículo $vehicle_id a ruta $route_id..."
-    curl -X PUT "http://localhost:8080/rutas/$route_id/asignar" \
+    curl -X PUT "http://localhost:8585/rutas/$route_id/asignar" \
         -H "Content-Type: application/json" \
         -d "{\"vehiculoId\": $vehicle_id}" | jq
 }
