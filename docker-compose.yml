@@ -181,7 +181,7 @@ services:
         export DEBIAN_FRONTEND=noninteractive
         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
         apt -y update
-        apt install -y install -y default-jdk
+        apt install -y default-jdk
         date
         echo */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
         cd /root/java
