@@ -28,7 +28,7 @@
 #     image: debian:12.1
 #     ports:
 #       - "9992:3306"
-    
+
 #     command:
 #         - bash
 #         - -c
@@ -51,7 +51,7 @@
 #     image: debian:12.1
 #     ports:
 #       - "9993:3306"
-    
+
 #     command:
 #         - bash
 #         - -c
@@ -75,7 +75,7 @@
 #     # crea un bind volume desde la ubicacion ./webapp a la carpeta /var/www/html
 #     volumes:
 #       - ./webapp:/var/www/html
-    
+
 #     command:
 #         - bash
 #         - -c
@@ -91,12 +91,6 @@
 
 # volumes:
 #   mysql_data:
-
-
-
-
-
-
 
 services:
   another_test_moodle:
@@ -143,7 +137,7 @@ services:
       - ${SIGEFVE_VOLUMES}/html:/var/www/html
       - ${SIGEFVE_VOLUMES}/ailv:/var/www/datacita
 
-### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
+  ### cambiar la interfaz de escucha de 127.0.0.0 a 0.0.0.0 en nano /etc/mysql/mariadb.conf.d/50-server.cnf
   another_database:
     container_name: another_database
     hostname: another_database
@@ -154,26 +148,26 @@ services:
     volumes:
       - ./bind.cnf:/etc/mysql/mariadb.conf.d/70-aldo.cnf
       - mysql_data:/var/lib/mysql
-#    environment:
-#      - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
+    #    environment:
+    #      - MYSQL_ALLOW_EMPTY_PASSWORD=${MYSQL_ALLOW_EMPTY_PASSWORD}
     #command: tail -F error.log
     command:
-        - bash
-        - -c
-        - |
-          export DEBIAN_FRONTEND=noninteractive
-          ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
-          apt update -y
-          apt install -y mariadb-server
-          mkdir -p /var/log/mysql/
-          chown mysql:mysql /var/log/mysql/
-          service mariadb restart
-          date
-          tail -F /var/log/mysql/*
-  
+      - bash
+      - -c
+      - |
+        export DEBIAN_FRONTEND=noninteractive
+        ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+        apt update -y
+        apt install -y mariadb-server
+        mkdir -p /var/log/mysql/
+        chown mysql:mysql /var/log/mysql/
+        service mariadb restart
+        date
+        tail -F /var/log/mysql/*
+
   java-sigefve_module:
-    hostname: another_test_moodle
-    container_name: another_test_moodle
+    hostname: java-sigefve_module
+    container_name: java-sigefve_module
     image: debian:12.1
     ports:
       - "8585:8585"
@@ -216,4 +210,3 @@ services:
       - ${SIGEFVE_VOLUMES}/java:/root/java
 volumes:
   mysql_data:
-
