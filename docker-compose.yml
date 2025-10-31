@@ -183,7 +183,7 @@ services:
         apt -y update
         apt install -y default-jdk
         date
-        echo */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+        echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         cd /root/java
         java -cp jar/gson-2.11.0.jar com/sigefve/ServidorHTTP.java
 
