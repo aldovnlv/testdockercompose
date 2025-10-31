@@ -76,6 +76,7 @@ com.sigefve/
 ### Modelo de Datos
 
 #### Tabla: vehiculos
+
 ```sql
 CREATE TABLE vehiculos (
     id SERIAL PRIMARY KEY,
@@ -98,6 +99,7 @@ CREATE TABLE vehiculos (
 ```
 
 #### Tabla: telemetria
+
 ```sql
 CREATE TABLE telemetria (
     id SERIAL PRIMARY KEY,
@@ -114,6 +116,7 @@ CREATE TABLE telemetria (
 ```
 
 #### Tabla: rutas
+
 ```sql
 CREATE TABLE rutas (
     id SERIAL PRIMARY KEY,
@@ -129,6 +132,7 @@ CREATE TABLE rutas (
 ```
 
 #### Tabla: entregas
+
 ```sql
 CREATE TABLE entregas (
     id SERIAL PRIMARY KEY,
@@ -151,20 +155,25 @@ CREATE TABLE entregas (
 #### Vehículos
 
 **GET /vehiculos**
+
 - Obtener todos los vehículos
 - Response: `200 OK` con array de vehículos
 
 **GET /vehiculos/:id**
+
 - Obtener un vehículo por ID
 - Response: `200 OK` con vehículo o `404 Not Found`
 
 **GET /vehiculos?estado=DISPONIBLE**
+
 - Filtrar vehículos por estado
 - Response: `200 OK` con array de vehículos
 
 **POST /vehiculos**
+
 - Crear un nuevo vehículo
 - Body ejemplo:
+
 ```json
 {
   "tipo": "VAN",
@@ -177,41 +186,51 @@ CREATE TABLE entregas (
   "numeroAsientos": 3
 }
 ```
+
 - Response: `201 Created` con ID del vehículo
 
 **PUT /vehiculos/:id**
+
 - Actualizar un vehículo completo
 - Body: Mismo formato que POST
 - Response: `200 OK`
 
 **PUT /vehiculos/:id/estado**
+
 - Cambiar solo el estado de un vehículo
 - Body:
+
 ```json
 {
   "estado": "EN_RUTA"
 }
 ```
+
 - Response: `200 OK`
 
 **DELETE /vehiculos/:id**
+
 - Eliminar un vehículo
 - Response: `200 OK` o `404 Not Found`
 
 #### Telemetría
 
 **GET /telemetria/vehiculo/:id**
+
 - Obtener historial de telemetría de un vehículo
 - Query params: `?limite=100` (opcional, default: 100)
 - Response: `200 OK` con array de telemetría
 
 **GET /telemetria/vehiculo/:id/ultima**
+
 - Obtener la última telemetría de un vehículo
 - Response: `200 OK` con telemetría o `404 Not Found`
 
 **POST /telemetria**
+
 - Registrar nueva telemetría (normalmente usado por el simulador)
 - Body:
+
 ```json
 {
   "vehiculoId": 1,
@@ -223,25 +242,31 @@ CREATE TABLE entregas (
   "kilometrajeActual": 1250.5
 }
 ```
+
 - Response: `201 Created` con ID
 
 #### Rutas
 
 **GET /rutas**
+
 - Obtener todas las rutas activas (no completadas)
 - Response: `200 OK` con array de rutas
 
 **GET /rutas/:id**
+
 - Obtener una ruta por ID (incluye entregas)
 - Response: `200 OK` con ruta o `404 Not Found`
 
 **GET /rutas/:id/entregas**
+
 - Obtener entregas de una ruta específica
 - Response: `200 OK` con array de entregas
 
 **POST /rutas**
+
 - Crear una nueva ruta
 - Body:
+
 ```json
 {
   "nombre": "Entregas Zona Centro",
@@ -249,11 +274,14 @@ CREATE TABLE entregas (
   "vehiculoId": 1
 }
 ```
+
 - Response: `201 Created` con ID
 
 **POST /rutas/:id/entregas**
+
 - Agregar una entrega a una ruta
 - Body:
+
 ```json
 {
   "direccionDestino": "Av. Juárez 123",
@@ -263,20 +291,25 @@ CREATE TABLE entregas (
   "pesoKg": 2.5
 }
 ```
+
 - Response: `201 Created` con ID
 
 **PUT /rutas/:id/asignar**
+
 - Asignar un vehículo a una ruta
 - Body:
+
 ```json
 {
   "vehiculoId": 1
 }
 ```
+
 - Response: `200 OK`
 - Nota: Cambia automáticamente el estado del vehículo a EN_RUTA
 
 **PUT /rutas/:id/completar**
+
 - Marcar una ruta como completada
 - Response: `200 OK`
 - Nota: Cambia automáticamente el estado del vehículo a DISPONIBLE
@@ -284,8 +317,10 @@ CREATE TABLE entregas (
 #### Health Check
 
 **GET /health**
+
 - Verificar estado del servicio
 - Response: `200 OK`
+
 ```json
 {
   "status": "OK",
@@ -303,6 +338,7 @@ El simulador genera automáticamente datos de telemetría cada 15 segundos para 
 - **Vehículos DISPONIBLE**: Datos estables con carga lenta
 
 El simulador considera:
+
 - Velocidad máxima según tipo de vehículo
 - Consumo de batería realista
 - Temperatura del motor variable
@@ -313,6 +349,7 @@ El simulador considera:
 #### Opción 1: Con Docker (Recomendado)
 
 1. **Construir y ejecutar con Docker Compose**:
+
 ```bash
 docker-compose up --build
 ```
@@ -322,17 +359,20 @@ El servicio estará disponible en `http://localhost:8585`
 #### Opción 2: Ejecución Local
 
 1. **Requisitos previos**:
+
    - Java 17 o superior
    - Maven 3.6+
    - PostgreSQL 15+ corriendo en localhost:54302
 
 2. **Configurar PostgreSQL**:
+
 ```bash
 psql -U postgres
 CREATE DATABASE sigefve;
 ```
 
 3. **Configurar variables de entorno** (opcional):
+
 ```bash
 export DB_URL=jdbc:postgresql://localhost:54302/sigefve
 export DB_USER=postgres
@@ -341,11 +381,13 @@ export JAVA_PORT=8585
 ```
 
 4. **Compilar el proyecto**:
+
 ```bash
 mvn clean package
 ```
 
 5. **Ejecutar**:
+
 ```bash
 java -jar target/sigefve-java-1.0.0.jar
 ```
@@ -369,6 +411,7 @@ java -cp target/sigefve-java-1.0.0.jar com.sigefve.utils.InicializadorDatos
 ```
 
 Esto creará:
+
 - 5 Vans (Mercedes eSprinter)
 - 5 Bicicletas Eléctricas (Cargo Bikes)
 - 5 Motos Eléctricas (Super Soco)
@@ -377,16 +420,19 @@ Esto creará:
 ### Pruebas con cURL
 
 **Listar todos los vehículos**:
+
 ```bash
 curl http://localhost:8585/vehiculos
 ```
 
 **Obtener vehículo específico**:
+
 ```bash
 curl http://localhost:8585/vehiculos/1
 ```
 
 **Crear un nuevo vehículo**:
+
 ```bash
 curl -X POST http://localhost:8585/vehiculos \
   -H "Content-Type: application/json" \
@@ -403,6 +449,7 @@ curl -X POST http://localhost:8585/vehiculos \
 ```
 
 **Cambiar estado de vehículo**:
+
 ```bash
 curl -X PUT http://localhost:8585/vehiculos/1/estado \
   -H "Content-Type: application/json" \
@@ -410,11 +457,13 @@ curl -X PUT http://localhost:8585/vehiculos/1/estado \
 ```
 
 **Obtener telemetría actual**:
+
 ```bash
 curl http://localhost:8585/telemetria/vehiculo/1/ultima
 ```
 
 **Asignar vehículo a ruta**:
+
 ```bash
 curl -X PUT http://localhost:8585/rutas/1/asignar \
   -H "Content-Type: application/json" \
@@ -440,6 +489,7 @@ telemetria = response.json()
 ```
 
 **Endpoints útiles para Python**:
+
 - `GET /vehiculos` - Analizar flota completa
 - `GET /telemetria/vehiculo/:id?limite=1000` - Análisis histórico
 - `GET /rutas/:id/entregas` - Estadísticas de entregas
@@ -457,6 +507,7 @@ router.Any("/api/vehiculos/*path", func(c *gin.Context) {
 ```
 
 **Rutas a proxear desde Go**:
+
 - `/api/vehiculos/*` → `http://java-service:8585/vehiculos/*`
 - `/api/telemetria/*` → `http://java-service:8585/telemetria/*`
 - `/api/rutas/*` → `http://java-service:8585/rutas/*`
@@ -487,29 +538,33 @@ sigefve-java/
 
 ### Variables de Entorno
 
-| Variable | Descripción | Valor por Defecto |
-|----------|-------------|-------------------|
-| `DB_URL` | URL de conexión a PostgreSQL | `jdbc:postgresql://localhost:54302/sigefve` |
-| `DB_USER` | Usuario de PostgreSQL | `postgres` |
-| `DB_PASSWORD` | Contraseña de PostgreSQL | `postgres` |
-| `JAVA_PORT` | Puerto del servidor HTTP | `8585` |
+| Variable      | Descripción                  | Valor por Defecto                           |
+| ------------- | ---------------------------- | ------------------------------------------- |
+| `DB_URL`      | URL de conexión a PostgreSQL | `jdbc:postgresql://localhost:54302/sigefve` |
+| `DB_USER`     | Usuario de PostgreSQL        | `postgres`                                  |
+| `DB_PASSWORD` | Contraseña de PostgreSQL     | `postgres`                                  |
+| `JAVA_PORT`   | Puerto del servidor HTTP     | `8585`                                      |
 
 ### Solución de Problemas
 
 **Error: "No se pudo conectar a PostgreSQL"**
+
 - Verificar que PostgreSQL esté corriendo
 - Verificar las credenciales en las variables de entorno
 - Si usas Docker, verificar que el servicio `postgres` esté healthy
 
 **Error: "Puerto 8585 ya está en uso"**
+
 - Cambiar el puerto usando la variable `JAVA_PORT`
 - O detener el proceso que está usando el puerto 8585
 
 **El simulador no genera telemetría**
+
 - Verificar que haya vehículos en la base de datos
 - Revisar los logs del servidor para errores
 
 **Los endpoints retornan 500 Internal Server Error**
+
 - Revisar los logs del servidor
 - Verificar que las tablas existan en PostgreSQL
 - Verificar que los datos sean válidos
