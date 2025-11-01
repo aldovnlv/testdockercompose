@@ -186,7 +186,14 @@ services:
         date
         echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         cd /root/java
-        
+
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/config/ConfiguracionBaseDatos.java;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorRutas.java;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorTelemetria.java;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorVehiculos.java;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/simulador/SimuladorTelemetria.java;
+
+
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/ServidorHTTP.java
         ls out
         : java -cp jar/gson-2.11.0.jar com/sigefve/ServidorHTTP.java
