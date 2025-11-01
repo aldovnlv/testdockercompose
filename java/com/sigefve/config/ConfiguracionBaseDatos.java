@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.postgresql.*;
 
 public class ConfiguracionBaseDatos {
     private static final String URL = System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://localhost:54302/sigefve");
