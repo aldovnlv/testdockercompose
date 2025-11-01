@@ -20,7 +20,7 @@ public class ServidorHTTP {
 
     public void iniciar() throws Exception {
         System.out.println("Iniciando SIGEFVE - Módulo Java");
-        System.out.println("═══════════════════════════════════════");
+        System.out.println("=======================================");
         
         // Inicializar base de datos
         System.out.println("Conectando a PostgreSQL...");
@@ -51,10 +51,10 @@ public class ServidorHTTP {
         simulador = new SimuladorTelemetria();
         simulador.iniciar();
         
-        System.out.println("═══════════════════════════════════════");
+        System.out.println("=======================================");
         System.out.println("SIGEFVE - Módulo Java en ejecución");
         System.out.println("API disponible en: http://localhost:" + PUERTO);
-        System.out.println("═══════════════════════════════════════\n");
+        System.out.println("=======================================\n");
     }
 
     public void detener() {
