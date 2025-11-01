@@ -82,7 +82,7 @@ public class ControladorTelemetria implements HttpHandler {
                 enviarError(exchange, 400, "ID de vehiculo requerido");
             }
         } catch (Exception e) {
-            enviarError(exchange, 500, e.getMessage());
+            enviarError(exchange, 500, e.getMessage() + " ******************");
         }
     }
 
@@ -109,7 +109,7 @@ public class ControladorTelemetria implements HttpHandler {
             
             enviarJSON(exchange, 201, respuesta);
         } catch (Exception e) {
-            enviarError(exchange, 400, "Sistema: " + e.getMessage());
+            enviarError(exchange, 400, e.getMessage());
         }
     }
 
