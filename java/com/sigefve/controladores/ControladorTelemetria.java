@@ -109,7 +109,7 @@ public class ControladorTelemetria implements HttpHandler {
             
             enviarJSON(exchange, 201, respuesta);
         } catch (Exception e) {
-            enviarError(exchange, 400, e.getMessage());
+            enviarError(exchange, 400, "Sistema: " + e.getMessage());
         }
     }
 
