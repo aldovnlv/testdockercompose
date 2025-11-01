@@ -15,26 +15,17 @@ public class ConfiguracionBaseDatos {
     
     private ConfiguracionBaseDatos() {
         try {
-            System.out.println("             ----------- try ---------");
             Class.forName("org.postgresql.Driver");
-            System.out.println("             ----------- class ---------");
             inicializarEsquema();
-            System.out.println("             ----------- esquema ---------");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Driver PostgreSQL no encontrado", e);
         }
     }
     
     public static ConfiguracionBaseDatos obtenerInstancia() {
-        System.out.println(" ----------- instancia ---------");
-        
         if (instancia == null) {
-            System.out.println("     ----------- if 1 ---------");
-
             synchronized (ConfiguracionBaseDatos.class) {
                 if (instancia == null) {
-                    System.out.println("         ----------- if 2 ---------");
-
                     instancia = new ConfiguracionBaseDatos();
                 }
             }
