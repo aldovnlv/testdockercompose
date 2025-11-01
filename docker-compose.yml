@@ -187,7 +187,7 @@ services:
         cd /root/java
 
         echo version 0.1
-        javac -d out -cp .:jar/gson-2.11.0.jar  com/sigefve/ServidorHTTP.java
+        javac -d out -cp .:jar/gson-2.11.0.jar:jar/postgresql-42.7.8.jar  com/sigefve/ServidorHTTP.java
         java -cp out com.sigefve.ServidorHTTP
 
         tail -F keep.alive
