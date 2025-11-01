@@ -180,32 +180,52 @@ services:
       - |
         export DEBIAN_FRONTEND=noninteractive
         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
-        apt -y update
-        apt install -y default-jdk
-        java -v
+        apt -y update > /dev/null 2>&1
+        apt install -y default-jdk > /dev/null 2>&1
+        java -version
         date
         echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         cd /root/java
 
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/*;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/*;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/EstadoEntrega;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/EstadoEntrega;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Entrega;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Entrega;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Ruta;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Ruta;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/RutaServicio;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/RutaServicio;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Telemetria;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Telemetria;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/TelemetriaServicio;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/TelemetriaServicio;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/EstadoVehiculo;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/EstadoVehiculo;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/TipoVehiculo;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/TipoVehiculo;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/VehiculoServicio;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/VehiculoServicio;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/config/ConfiguracionBaseDatos;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/config/ConfiguracionBaseDatos;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/EntregaDAO;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/EntregaDAO;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/RutaDAO;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/RutaDAO;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/VehiculoDAO;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/VehiculoDAO;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/VehiculoElectrico;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/VehiculoElectrico;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/TelemetriaDAO;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/TelemetriaDAO;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorRutas;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorRutas;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorTelemetria;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorTelemetria;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorVehiculos;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorVehiculos;
+        echo ::::::::::: javac -d out -cp jar/gson-2.11.0.jar com/sigefve/simulador/SimuladorTelemetria;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/simulador/SimuladorTelemetria;
 
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/config/ConfiguracionBaseDatos.java;

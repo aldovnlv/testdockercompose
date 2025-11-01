@@ -36,7 +36,7 @@ public class SimuladorTelemetria {
     }
 
     public void iniciar() {
-        System.out.println("🚀 Iniciando simulador de telemetria...");
+        System.out.println("Iniciando simulador de telemetria...");
         
         // Programar la generacion de telemetria cada 15 segundos
         scheduler.scheduleAtFixedRate(() -> {
@@ -47,7 +47,7 @@ public class SimuladorTelemetria {
             }
         }, 0, 15, TimeUnit.SECONDS);
 
-        System.out.println("✓ Simulador iniciado. Generando telemetria cada 15 segundos...");
+        System.out.println("Simulador iniciado. Generando telemetria cada 15 segundos...");
     }
 
     public void detener() {
@@ -76,7 +76,7 @@ public class SimuladorTelemetria {
             
             // Log periodico cada minuto (cada 4 ciclos de 15s)
             if (estado.ciclos % 4 == 0) {
-                System.out.printf("[%s] Bateria: %.1f%% | Temp: %.1f°C | Km: %.2f%n",
+                System.out.printf("[%s] Bateria: %.1f%% | Temp: %.1f C | Km: %.2f%n",
                     vehiculo.getPlaca(),
                     telemetria.getNivelBateria(),
                     telemetria.getTemperaturaMotor(),

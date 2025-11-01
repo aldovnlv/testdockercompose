@@ -8,7 +8,7 @@ public class Telemetria {
     private double nivelBateria; // porcentaje
     private double latitud;
     private double longitud;
-    private double temperaturaMotor; // °C
+    private double temperaturaMotor; // C
     private double velocidadActual; // km/h
     private double kilometrajeActual;
     private LocalDateTime timestamp;
