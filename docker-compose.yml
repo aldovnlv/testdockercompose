@@ -173,7 +173,7 @@ services:
       - "8585:8585"
     restart: unless-stopped
     depends_on:
-      - another_database
+      - postgresql_java
     command:
       - /bin/bash
       - -c
@@ -193,5 +193,18 @@ services:
         tail -F keep.alive
     volumes:
       - ${SIGEFVE_VOLUMES}/java:/root/java
+    
+  postgresql_java:
+    hostname: postgresql_java
+    container_name: postgresql_java
+    image: postgres:14-alpine
+    ports:
+      - 54302:5432
+    volumes:
+      - ${SIGEFVE_VOLUMES}/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=sigefve
 volumes:
   mysql_data:
