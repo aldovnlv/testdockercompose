@@ -1,6 +1,3 @@
-// ==================== SERVIDOR PRINCIPAL ====================
-
-// ServidorHTTP.java
 package com.sigefve;
 
 import com.sigefve.config.ConfiguracionBaseDatos;
@@ -48,7 +45,7 @@ public class ServidorHTTP {
         });
         
         servidor.start();
-        System.out.println("✓ Servidor HTTP iniciado en puerto " + PUERTO);
+        System.out.println("Servidor HTTP iniciado en puerto " + PUERTO);
         
         // Iniciar simulador de telemetría
         simulador = new SimuladorTelemetria();
@@ -68,7 +65,7 @@ public class ServidorHTTP {
         if (servidor != null) {
             servidor.stop(0);
         }
-        System.out.println("✓ Servidor detenido correctamente");
+        System.out.println("Servidor detenido correctamente");
     }
 
     public static void main(String[] args) {

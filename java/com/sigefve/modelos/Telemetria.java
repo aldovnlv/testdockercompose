@@ -1,4 +1,3 @@
-// Telemetria.java
 package com.sigefve.modelos;
 
 import java.time.LocalDateTime;

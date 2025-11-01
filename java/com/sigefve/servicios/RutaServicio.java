@@ -1,4 +1,3 @@
-// RutaServicio.java
 package com.sigefve.servicios;
 
 import com.sigefve.dao.EntregaDAO;

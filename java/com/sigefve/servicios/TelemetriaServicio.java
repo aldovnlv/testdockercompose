@@ -1,4 +1,3 @@
-// TelemetriaServicio.java
 package com.sigefve.servicios;
 
 import com.sigefve.dao.TelemetriaDAO;

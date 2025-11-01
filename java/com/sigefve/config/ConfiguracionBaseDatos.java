@@ -1,7 +1,4 @@
 package com.sigefve.config;
-// ==================== CONFIGURACIÓN ====================
-
-// ConfiguracionBaseDatos.java
 
 import java.sql.Connection;
 import java.sql.DriverManager;

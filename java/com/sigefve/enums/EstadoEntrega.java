@@ -1,4 +1,3 @@
-// EstadoEntrega.java
 package com.sigefve.enums;
 
 public enum EstadoEntrega {

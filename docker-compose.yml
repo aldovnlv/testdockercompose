@@ -182,11 +182,15 @@ services:
         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
         apt -y update
         apt install -y default-jdk
+        java -v
         date
         echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         cd /root/java
-        javac -cp jar/gson-2.11.0.jar -d out $(find . -name "*.java")
-        java -cp out:jar/gson-2.11.0.jar com.sigefve.ServidorHTTP
+        
+        javac -cp jar/gson-2.11.0.jar com/sigefve/ServidorHTTP.java
+
+        :javac -cp jar/gson-2.11.0.jar -d out $(find . -name "*.java")
+        :java -cp out:jar/gson-2.11.0.jar com.sigefve.ServidorHTTP
 
         tail -F keep.alive
     volumes:

@@ -1,6 +1,3 @@
-// ==================== ENUMS ====================
-
-// EstadoVehiculo.java
 package com.sigefve.enums;
 
 public enum EstadoVehiculo {

@@ -1,6 +1,3 @@
-// ==================== MODELOS ====================
-
-// Vehiculo.java
 package com.sigefve.modelos;
 
 import com.sigefve.enums.EstadoVehiculo;

@@ -1,6 +1,3 @@
-// ==================== CONTROLADORES HTTP ====================
-
-// ControladorVehiculos.java
 package com.sigefve.controladores;
 
 import com.google.gson.Gson;

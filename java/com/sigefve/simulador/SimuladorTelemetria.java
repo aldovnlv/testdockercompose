@@ -1,6 +1,3 @@
-// ==================== SIMULADOR DE TELEMETRÍA ====================
-
-// SimuladorTelemetria.java
 package com.sigefve.simulador;
 
 import com.sigefve.dao.VehiculoDAO;
@@ -79,7 +76,7 @@ public class SimuladorTelemetria {
             
             // Log periódico cada minuto (cada 4 ciclos de 15s)
             if (estado.ciclos % 4 == 0) {
-                System.out.printf("📊 [%s] Batería: %.1f%% | Temp: %.1f°C | Km: %.2f%n",
+                System.out.printf("[%s] Batería: %.1f%% | Temp: %.1f°C | Km: %.2f%n",
                     vehiculo.getPlaca(),
                     telemetria.getNivelBateria(),
                     telemetria.getTemperaturaMotor(),

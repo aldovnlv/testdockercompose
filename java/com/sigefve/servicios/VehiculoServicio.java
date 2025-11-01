@@ -1,6 +1,3 @@
-// ==================== SERVICIOS ====================
-
-// VehiculoServicio.java
 package com.sigefve.servicios;
 
 import com.sigefve.dao.VehiculoDAO;

@@ -1,4 +1,3 @@
-// EntregaDAO.java
 package com.sigefve.dao;
 
 import com.sigefve.config.ConfiguracionBaseDatos;

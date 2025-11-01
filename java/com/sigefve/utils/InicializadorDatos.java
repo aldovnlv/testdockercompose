@@ -1,4 +1,3 @@
-// InicializadorDatos.java
 package com.sigefve.utils;
 
 import com.sigefve.enums.EstadoVehiculo;
