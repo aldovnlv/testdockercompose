@@ -43,7 +43,7 @@ public class ControladorTelemetria implements HttpHandler {
             } else if (metodo.equals("POST")) {
                 manejarPOST(exchange);
             } else {
-                enviarError(exchange, 405, "Método no permitido");
+                enviarError(exchange, 405, "Metodo no permitido");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, "Error interno: " + e.getMessage());
@@ -60,7 +60,7 @@ public class ControladorTelemetria implements HttpHandler {
                 if (telemetria != null) {
                     enviarJSON(exchange, 200, telemetria);
                 } else {
-                    enviarError(exchange, 404, "No hay telemetría para este vehículo");
+                    enviarError(exchange, 404, "No hay telemetria para este vehiculo");
                 }
             }
             // GET /telemetria/vehiculo/:id?limite=100
@@ -79,7 +79,7 @@ public class ControladorTelemetria implements HttpHandler {
                 List<Telemetria> historial = telemetriaServicio.obtenerHistorial(vehiculoId, limite);
                 enviarJSON(exchange, 200, historial);
             } else {
-                enviarError(exchange, 400, "ID de vehículo requerido");
+                enviarError(exchange, 400, "ID de vehiculo requerido");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, e.getMessage());
@@ -105,7 +105,7 @@ public class ControladorTelemetria implements HttpHandler {
             
             JsonObject respuesta = new JsonObject();
             respuesta.addProperty("id", id);
-            respuesta.addProperty("mensaje", "Telemetría registrada exitosamente");
+            respuesta.addProperty("mensaje", "Telemetria registrada exitosamente");
             
             enviarJSON(exchange, 201, respuesta);
         } catch (Exception e) {

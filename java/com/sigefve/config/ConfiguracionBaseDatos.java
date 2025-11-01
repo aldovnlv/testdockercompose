@@ -109,7 +109,7 @@ public class ConfiguracionBaseDatos {
             )
             """,
             
-            // Índices para mejorar rendimiento
+            // indices para mejorar rendimiento
             "CREATE INDEX IF NOT EXISTS idx_telemetria_vehiculo ON telemetria(vehiculo_id)",
             "CREATE INDEX IF NOT EXISTS idx_telemetria_timestamp ON telemetria(timestamp DESC)",
             "CREATE INDEX IF NOT EXISTS idx_rutas_vehiculo ON rutas(vehiculo_id)",

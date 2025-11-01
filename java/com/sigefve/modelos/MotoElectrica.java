@@ -30,7 +30,7 @@ public class MotoElectrica extends VehiculoElectrico {
 
     @Override
     public String obtenerDescripcion() {
-        return String.format("Moto Eléctrica %s - Capacidad: %.0f kg%s", 
+        return String.format("Moto Electrica %s - Capacidad: %.0f kg%s", 
                            modelo, obtenerCapacidadCarga(),
                            tieneTopCase ? " (con top case)" : "");
     }

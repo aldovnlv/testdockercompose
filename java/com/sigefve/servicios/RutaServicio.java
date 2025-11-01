@@ -48,22 +48,22 @@ public class RutaServicio {
     }
 
     public boolean asignarRutaAVehiculo(Long rutaId, Long vehiculoId) throws SQLException {
-        // Verificar que el vehículo existe y está disponible
+        // Verificar que el vehiculo existe y esta disponible
         Optional<VehiculoElectrico> vehiculoOpt = vehiculoDAO.obtenerPorId(vehiculoId);
         if (vehiculoOpt.isEmpty()) {
-            throw new IllegalArgumentException("Vehículo no encontrado con ID: " + vehiculoId);
+            throw new IllegalArgumentException("Vehiculo no encontrado con ID: " + vehiculoId);
         }
 
         VehiculoElectrico vehiculo = vehiculoOpt.get();
         if (vehiculo.getEstado() != EstadoVehiculo.DISPONIBLE) {
-            throw new IllegalStateException("El vehículo no está disponible para asignar rutas");
+            throw new IllegalStateException("El vehiculo no esta disponible para asignar rutas");
         }
 
         // Asignar la ruta
         boolean asignado = rutaDAO.asignarVehiculo(rutaId, vehiculoId);
         
         if (asignado) {
-            // Cambiar estado del vehículo a EN_RUTA
+            // Cambiar estado del vehiculo a EN_RUTA
             vehiculoDAO.cambiarEstado(vehiculoId, EstadoVehiculo.EN_RUTA);
         }
 
@@ -98,7 +98,7 @@ public class RutaServicio {
         boolean completada = rutaDAO.marcarComoCompletada(rutaId);
 
         if (completada && ruta.getVehiculoId() != null) {
-            // Cambiar estado del vehículo a DISPONIBLE
+            // Cambiar estado del vehiculo a DISPONIBLE
             vehiculoDAO.cambiarEstado(ruta.getVehiculoId(), EstadoVehiculo.DISPONIBLE);
         }
 

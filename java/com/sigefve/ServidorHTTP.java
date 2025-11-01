@@ -19,7 +19,7 @@ public class ServidorHTTP {
     private SimuladorTelemetria simulador;
 
     public void iniciar() throws Exception {
-        System.out.println("Iniciando SIGEFVE - Módulo Java");
+        System.out.println("Iniciando SIGEFVE - Modulo Java");
         System.out.println("=======================================");
         
         // Inicializar base de datos
@@ -47,12 +47,12 @@ public class ServidorHTTP {
         servidor.start();
         System.out.println("Servidor HTTP iniciado en puerto " + PUERTO);
         
-        // Iniciar simulador de telemetría
+        // Iniciar simulador de telemetria
         simulador = new SimuladorTelemetria();
         simulador.iniciar();
         
         System.out.println("=======================================");
-        System.out.println("SIGEFVE - Módulo Java en ejecución");
+        System.out.println("SIGEFVE - Modulo Java en ejecucion");
         System.out.println("API disponible en: http://localhost:" + PUERTO);
         System.out.println("=======================================\n");
     }
@@ -76,7 +76,7 @@ public class ServidorHTTP {
         
         try {
             servidor.iniciar();
-            Thread.currentThread().join(); // Mantener el servidor ejecutándose
+            Thread.currentThread().join(); // Mantener el servidor ejecutandose
         } catch (Exception e) {
             System.err.println(" Error al iniciar servidor: " + e.getMessage());
             e.printStackTrace();

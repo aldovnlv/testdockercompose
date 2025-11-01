@@ -22,7 +22,7 @@ public class SimuladorTelemetria {
     private final Random random;
     private final Map<Long, EstadoSimulacion> estadosVehiculos;
     
-    // Coordenadas base (Celaya, Guanajuato, México)
+    // Coordenadas base (Celaya, Guanajuato, Mexico)
     private static final double LATITUD_BASE = 20.5288;
     private static final double LONGITUD_BASE = -100.8157;
     private static final double RADIO_OPERACION = 0.1; // ~11 km
@@ -36,22 +36,22 @@ public class SimuladorTelemetria {
     }
 
     public void iniciar() {
-        System.out.println("🚀 Iniciando simulador de telemetría...");
+        System.out.println("🚀 Iniciando simulador de telemetria...");
         
-        // Programar la generación de telemetría cada 15 segundos
+        // Programar la generacion de telemetria cada 15 segundos
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 generarTelemetriaParaTodos();
             } catch (Exception e) {
-                System.err.println("Error en simulación: " + e.getMessage());
+                System.err.println("Error en simulacion: " + e.getMessage());
             }
         }, 0, 15, TimeUnit.SECONDS);
 
-        System.out.println("✓ Simulador iniciado. Generando telemetría cada 15 segundos...");
+        System.out.println("✓ Simulador iniciado. Generando telemetria cada 15 segundos...");
     }
 
     public void detener() {
-        System.out.println("Deteniendo simulador de telemetría...");
+        System.out.println("Deteniendo simulador de telemetria...");
         scheduler.shutdown();
         try {
             if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
@@ -74,9 +74,9 @@ public class SimuladorTelemetria {
             Telemetria telemetria = generarTelemetria(vehiculo, estado);
             telemetriaServicio.registrarTelemetria(telemetria);
             
-            // Log periódico cada minuto (cada 4 ciclos de 15s)
+            // Log periodico cada minuto (cada 4 ciclos de 15s)
             if (estado.ciclos % 4 == 0) {
-                System.out.printf("[%s] Batería: %.1f%% | Temp: %.1f°C | Km: %.2f%n",
+                System.out.printf("[%s] Bateria: %.1f%% | Temp: %.1f°C | Km: %.2f%n",
                     vehiculo.getPlaca(),
                     telemetria.getNivelBateria(),
                     telemetria.getTemperaturaMotor(),
@@ -92,7 +92,7 @@ public class SimuladorTelemetria {
         Telemetria telemetria = new Telemetria();
         telemetria.setVehiculoId(vehiculo.getId());
 
-        // Generar datos según el estado del vehículo
+        // Generar datos segun el estado del vehiculo
         switch (vehiculo.getEstado()) {
             case EN_RUTA -> generarTelemetriaEnRuta(telemetria, vehiculo, estado);
             case CARGANDO -> generarTelemetriaCargando(telemetria, vehiculo, estado);
@@ -104,11 +104,11 @@ public class SimuladorTelemetria {
     }
 
     private void generarTelemetriaEnRuta(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
-        // Velocidad variable según tipo de vehículo
+        // Velocidad variable segun tipo de vehiculo
         double velocidadMaxima = v.obtenerVelocidadMaxima();
         t.setVelocidadActual(velocidadMaxima * (0.5 + random.nextDouble() * 0.5));
         
-        // Consumo de batería (0.5% - 2% cada 15 segundos)
+        // Consumo de bateria (0.5% - 2% cada 15 segundos)
         e.nivelBateria -= 0.5 + random.nextDouble() * 1.5;
         e.nivelBateria = Math.max(0, e.nivelBateria);
         t.setNivelBateria(e.nivelBateria);
@@ -122,7 +122,7 @@ public class SimuladorTelemetria {
         e.temperaturaMotor = Math.min(75, e.temperaturaMotor + random.nextDouble() * 2);
         t.setTemperaturaMotor(e.temperaturaMotor);
         
-        // Ubicación (movimiento simulado)
+        // Ubicacion (movimiento simulado)
         actualizarUbicacion(e);
         t.setLatitud(e.latitud);
         t.setLongitud(e.longitud);
@@ -131,7 +131,7 @@ public class SimuladorTelemetria {
     private void generarTelemetriaCargando(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
         t.setVelocidadActual(0);
         
-        // Incremento de batería (2% - 5% cada 15 segundos)
+        // Incremento de bateria (2% - 5% cada 15 segundos)
         e.nivelBateria += 2 + random.nextDouble() * 3;
         e.nivelBateria = Math.min(100, e.nivelBateria);
         t.setNivelBateria(e.nivelBateria);
@@ -143,7 +143,7 @@ public class SimuladorTelemetria {
         e.temperaturaMotor = Math.max(25, e.temperaturaMotor - random.nextDouble());
         t.setTemperaturaMotor(e.temperaturaMotor);
         
-        // Ubicación fija
+        // Ubicacion fija
         t.setLatitud(e.latitud);
         t.setLongitud(e.longitud);
     }
@@ -164,7 +164,7 @@ public class SimuladorTelemetria {
     private void generarTelemetriaDisponible(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
         t.setVelocidadActual(0);
         
-        // Batería estable o carga lenta
+        // Bateria estable o carga lenta
         if (e.nivelBateria < 80) {
             e.nivelBateria += random.nextDouble() * 0.5;
         }
@@ -181,14 +181,14 @@ public class SimuladorTelemetria {
     }
 
     private void actualizarUbicacion(EstadoSimulacion estado) {
-        // Movimiento aleatorio dentro del radio de operación
+        // Movimiento aleatorio dentro del radio de operacion
         double angulo = random.nextDouble() * 2 * Math.PI;
         double distancia = random.nextDouble() * 0.002; // ~200 metros
         
         estado.latitud += distancia * Math.cos(angulo);
         estado.longitud += distancia * Math.sin(angulo);
         
-        // Mantener dentro del área de operación
+        // Mantener dentro del area de operacion
         double distanciaDelCentro = Math.sqrt(
             Math.pow(estado.latitud - LATITUD_BASE, 2) + 
             Math.pow(estado.longitud - LONGITUD_BASE, 2)
@@ -200,7 +200,7 @@ public class SimuladorTelemetria {
         }
     }
 
-    // Clase interna para mantener el estado de simulación
+    // Clase interna para mantener el estado de simulacion
     private static class EstadoSimulacion {
         double nivelBateria;
         double latitud;

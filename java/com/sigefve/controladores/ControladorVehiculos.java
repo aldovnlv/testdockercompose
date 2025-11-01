@@ -44,7 +44,7 @@ public class ControladorVehiculos implements HttpHandler {
                 case "POST" -> manejarPOST(exchange);
                 case "PUT" -> manejarPUT(exchange, partes);
                 case "DELETE" -> manejarDELETE(exchange, partes);
-                default -> enviarError(exchange, 405, "Método no permitido");
+                default -> enviarError(exchange, 405, "Metodo no permitido");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, "Error interno: " + e.getMessage());
@@ -61,7 +61,7 @@ public class ControladorVehiculos implements HttpHandler {
                 if (vehiculo.isPresent()) {
                     enviarJSON(exchange, 200, vehiculo.get());
                 } else {
-                    enviarError(exchange, 404, "Vehículo no encontrado");
+                    enviarError(exchange, 404, "Vehiculo no encontrado");
                 }
             }
             // GET /vehiculos?estado=DISPONIBLE
@@ -97,7 +97,7 @@ public class ControladorVehiculos implements HttpHandler {
             
             JsonObject respuesta = new JsonObject();
             respuesta.addProperty("id", id);
-            respuesta.addProperty("mensaje", "Vehículo creado exitosamente");
+            respuesta.addProperty("mensaje", "Vehiculo creado exitosamente");
             
             enviarJSON(exchange, 201, respuesta);
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class ControladorVehiculos implements HttpHandler {
     private void manejarPUT(HttpExchange exchange, String[] partes) throws IOException {
         try {
             if (partes.length < 3 || partes[2].isEmpty()) {
-                enviarError(exchange, 400, "ID de vehículo requerido");
+                enviarError(exchange, 400, "ID de vehiculo requerido");
                 return;
             }
 
@@ -125,14 +125,14 @@ public class ControladorVehiculos implements HttpHandler {
                 respuesta.addProperty("mensaje", "Estado actualizado exitosamente");
                 enviarJSON(exchange, 200, respuesta);
             }
-            // PUT /vehiculos/:id - Actualizar vehículo completo
+            // PUT /vehiculos/:id - Actualizar vehiculo completo
             else {
                 VehiculoElectrico vehiculo = crearVehiculoDesdeJSON(json);
                 vehiculo.setId(id);
                 vehiculoServicio.actualizarVehiculo(vehiculo);
                 
                 JsonObject respuesta = new JsonObject();
-                respuesta.addProperty("mensaje", "Vehículo actualizado exitosamente");
+                respuesta.addProperty("mensaje", "Vehiculo actualizado exitosamente");
                 enviarJSON(exchange, 200, respuesta);
             }
         } catch (Exception e) {
@@ -143,7 +143,7 @@ public class ControladorVehiculos implements HttpHandler {
     private void manejarDELETE(HttpExchange exchange, String[] partes) throws IOException {
         try {
             if (partes.length < 3 || partes[2].isEmpty()) {
-                enviarError(exchange, 400, "ID de vehículo requerido");
+                enviarError(exchange, 400, "ID de vehiculo requerido");
                 return;
             }
 
@@ -152,10 +152,10 @@ public class ControladorVehiculos implements HttpHandler {
             
             if (eliminado) {
                 JsonObject respuesta = new JsonObject();
-                respuesta.addProperty("mensaje", "Vehículo eliminado exitosamente");
+                respuesta.addProperty("mensaje", "Vehiculo eliminado exitosamente");
                 enviarJSON(exchange, 200, respuesta);
             } else {
-                enviarError(exchange, 404, "Vehículo no encontrado");
+                enviarError(exchange, 404, "Vehiculo no encontrado");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, e.getMessage());
@@ -189,7 +189,7 @@ public class ControladorVehiculos implements HttpHandler {
         };
     }
 
-    // Métodos auxiliares reutilizables
+    // Metodos auxiliares reutilizables
     private void configurarCORS(HttpExchange exchange) {
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");

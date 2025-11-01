@@ -37,7 +37,7 @@ public class VehiculoDAO {
             stmt.setDouble(7, vehiculo.getAutonomiaMaxima());
             stmt.setDouble(8, vehiculo.getConsumoPromedio());
 
-            // Campos específicos por tipo
+            // Campos especificos por tipo
             if (vehiculo instanceof Van van) {
                 stmt.setDouble(9, van.getCapacidadCarga());
                 stmt.setInt(10, van.getNumeroAsientos());
@@ -57,7 +57,7 @@ public class VehiculoDAO {
 
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas == 0) {
-                throw new SQLException("No se pudo crear el vehículo");
+                throw new SQLException("No se pudo crear el vehiculo");
             }
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -66,7 +66,7 @@ public class VehiculoDAO {
                     vehiculo.setId(id);
                     return id;
                 } else {
-                    throw new SQLException("No se pudo obtener el ID del vehículo creado");
+                    throw new SQLException("No se pudo obtener el ID del vehiculo creado");
                 }
             }
         }
@@ -143,7 +143,7 @@ public class VehiculoDAO {
 
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas == 0) {
-                throw new SQLException("No se encontró el vehículo con ID: " + vehiculo.getId());
+                throw new SQLException("No se encontro el vehiculo con ID: " + vehiculo.getId());
             }
         }
     }
@@ -195,7 +195,7 @@ public class VehiculoDAO {
                 moto.setTieneTopCase(rs.getBoolean("tiene_top_case"));
                 vehiculo = moto;
             }
-            default -> throw new SQLException("Tipo de vehículo desconocido: " + tipo);
+            default -> throw new SQLException("Tipo de vehiculo desconocido: " + tipo);
         }
 
         vehiculo.setId(rs.getLong("id"));

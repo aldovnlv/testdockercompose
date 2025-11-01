@@ -22,7 +22,7 @@ public class TelemetriaServicio {
     public Long registrarTelemetria(Telemetria telemetria) throws SQLException {
         validarTelemetria(telemetria);
         
-        // Actualizar kilometraje del vehículo
+        // Actualizar kilometraje del vehiculo
         Optional<VehiculoElectrico> vehiculoOpt = vehiculoDAO.obtenerPorId(telemetria.getVehiculoId());
         if (vehiculoOpt.isPresent()) {
             VehiculoElectrico vehiculo = vehiculoOpt.get();
@@ -37,7 +37,7 @@ public class TelemetriaServicio {
 
     public List<Telemetria> obtenerHistorial(Long vehiculoId, int limite) throws SQLException {
         if (limite <= 0 || limite > 1000) {
-            limite = 100; // Límite por defecto
+            limite = 100; // Limite por defecto
         }
         return telemetriaDAO.obtenerHistorialPorVehiculo(vehiculoId, limite);
     }
@@ -55,10 +55,10 @@ public class TelemetriaServicio {
 
     private void validarTelemetria(Telemetria telemetria) {
         if (telemetria.getVehiculoId() == null) {
-            throw new IllegalArgumentException("El ID del vehículo es obligatorio");
+            throw new IllegalArgumentException("El ID del vehiculo es obligatorio");
         }
         if (telemetria.getNivelBateria() < 0 || telemetria.getNivelBateria() > 100) {
-            throw new IllegalArgumentException("El nivel de batería debe estar entre 0 y 100");
+            throw new IllegalArgumentException("El nivel de bateria debe estar entre 0 y 100");
         }
         if (telemetria.getLatitud() < -90 || telemetria.getLatitud() > 90) {
             throw new IllegalArgumentException("La latitud debe estar entre -90 y 90");

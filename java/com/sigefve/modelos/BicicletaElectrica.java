@@ -30,7 +30,7 @@ public class BicicletaElectrica extends VehiculoElectrico {
 
     @Override
     public String obtenerDescripcion() {
-        return String.format("Bicicleta Eléctrica %s - Capacidad: %.0f kg%s", 
+        return String.format("Bicicleta Electrica %s - Capacidad: %.0f kg%s", 
                            modelo, obtenerCapacidadCarga(),
                            tieneCanastaExtra ? " (con canasta extra)" : "");
     }

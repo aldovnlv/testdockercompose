@@ -42,7 +42,7 @@ public class ControladorRutas implements HttpHandler {
                 case "GET" -> manejarGET(exchange, partes);
                 case "POST" -> manejarPOST(exchange, partes);
                 case "PUT" -> manejarPUT(exchange, partes);
-                default -> enviarError(exchange, 405, "Método no permitido");
+                default -> enviarError(exchange, 405, "Metodo no permitido");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, "Error interno: " + e.getMessage());
@@ -128,7 +128,7 @@ public class ControladorRutas implements HttpHandler {
             String body = leerCuerpo(exchange);
             JsonObject json = gson.fromJson(body, JsonObject.class);
 
-            // PUT /rutas/:id/asignar - Asignar vehículo a ruta
+            // PUT /rutas/:id/asignar - Asignar vehiculo a ruta
             if (partes.length >= 4 && partes[3].equals("asignar")) {
                 Long rutaId = Long.parseLong(partes[2]);
                 Long vehiculoId = json.get("vehiculoId").getAsLong();
@@ -136,7 +136,7 @@ public class ControladorRutas implements HttpHandler {
                 rutaServicio.asignarRutaAVehiculo(rutaId, vehiculoId);
                 
                 JsonObject respuesta = new JsonObject();
-                respuesta.addProperty("mensaje", "Vehículo asignado exitosamente");
+                respuesta.addProperty("mensaje", "Vehiculo asignado exitosamente");
                 enviarJSON(exchange, 200, respuesta);
             }
             // PUT /rutas/:id/completar - Marcar ruta como completada

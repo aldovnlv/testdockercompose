@@ -34,7 +34,7 @@ public class VehiculoServicio {
 
     public void actualizarVehiculo(VehiculoElectrico vehiculo) throws SQLException {
         if (vehiculo.getId() == null) {
-            throw new IllegalArgumentException("El ID del vehículo no puede ser nulo");
+            throw new IllegalArgumentException("El ID del vehiculo no puede ser nulo");
         }
         validarVehiculo(vehiculo);
         vehiculoDAO.actualizar(vehiculo);
@@ -43,7 +43,7 @@ public class VehiculoServicio {
     public boolean cambiarEstadoVehiculo(Long id, EstadoVehiculo nuevoEstado) throws SQLException {
         Optional<VehiculoElectrico> vehiculoOpt = vehiculoDAO.obtenerPorId(id);
         if (vehiculoOpt.isEmpty()) {
-            throw new IllegalArgumentException("Vehículo no encontrado con ID: " + id);
+            throw new IllegalArgumentException("Vehiculo no encontrado con ID: " + id);
         }
 
         return vehiculoDAO.cambiarEstado(id, nuevoEstado);
@@ -55,19 +55,19 @@ public class VehiculoServicio {
 
     private void validarVehiculo(VehiculoElectrico vehiculo) {
         if (vehiculo.getPlaca() == null || vehiculo.getPlaca().trim().isEmpty()) {
-            throw new IllegalArgumentException("La placa del vehículo es obligatoria");
+            throw new IllegalArgumentException("La placa del vehiculo es obligatoria");
         }
         if (vehiculo.getModelo() == null || vehiculo.getModelo().trim().isEmpty()) {
-            throw new IllegalArgumentException("El modelo del vehículo es obligatorio");
+            throw new IllegalArgumentException("El modelo del vehiculo es obligatorio");
         }
         if (vehiculo.getAnio() < 2000 || vehiculo.getAnio() > 2030) {
-            throw new IllegalArgumentException("El año del vehículo debe estar entre 2000 y 2030");
+            throw new IllegalArgumentException("El año del vehiculo debe estar entre 2000 y 2030");
         }
         if (vehiculo.getCapacidadBateria() <= 0) {
-            throw new IllegalArgumentException("La capacidad de batería debe ser mayor a 0");
+            throw new IllegalArgumentException("La capacidad de bateria debe ser mayor a 0");
         }
         if (vehiculo.getAutonomiaMaxima() <= 0) {
-            throw new IllegalArgumentException("La autonomía máxima debe ser mayor a 0");
+            throw new IllegalArgumentException("La autonomia maxima debe ser mayor a 0");
         }
     }
 }

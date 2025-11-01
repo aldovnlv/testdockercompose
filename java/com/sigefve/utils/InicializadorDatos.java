@@ -33,7 +33,7 @@ public class InicializadorDatos {
     }
 
     private void crearVehiculos() throws SQLException {
-        System.out.println("Creando vehículos...");
+        System.out.println("Creando vehiculos...");
         
         // Crear 5 Vans
         for (int i = 1; i <= 5; i++) {
@@ -42,7 +42,7 @@ public class InicializadorDatos {
                 "Mercedes eSprinter " + (2020 + i % 3),
                 2020 + i % 3,
                 90.0,  // 90 kWh
-                150.0, // 150 km autonomía
+                150.0, // 150 km autonomia
                 1500.0, // 1500 kg capacidad
                 3       // 3 asientos
             );
@@ -61,14 +61,14 @@ public class InicializadorDatos {
             System.out.println("  Van creada: " + van.getPlaca() + " (ID: " + id + ")");
         }
 
-        // Crear 5 Bicicletas Eléctricas
+        // Crear 5 Bicicletas Electricas
         for (int i = 1; i <= 5; i++) {
             BicicletaElectrica bici = new BicicletaElectrica(
                 "BICI-" + String.format("%03d", i),
                 "Cargo Bike E-" + i,
                 2022 + i % 2,
                 1.5,   // 1.5 kWh
-                50.0,  // 50 km autonomía
+                50.0,  // 50 km autonomia
                 80.0,  // 80 kg capacidad
                 i % 2 == 0  // Mitad con canasta extra
             );
@@ -79,14 +79,14 @@ public class InicializadorDatos {
             System.out.println("  Bicicleta creada: " + bici.getPlaca() + " (ID: " + id + ")");
         }
 
-        // Crear 5 Motos Eléctricas
+        // Crear 5 Motos Electricas
         for (int i = 1; i <= 5; i++) {
             MotoElectrica moto = new MotoElectrica(
                 "MOTO-" + String.format("%03d", i),
                 "Super Soco TC Max",
                 2023,
                 3.0,   // 3 kWh
-                80.0,  // 80 km autonomía
+                80.0,  // 80 km autonomia
                 50.0,  // 50 kg capacidad
                 i % 3 == 0  // Algunas con top case
             );
@@ -111,7 +111,7 @@ public class InicializadorDatos {
         
         rutaServicio.agregarEntregaARuta(rutaCentroId, new Entrega(
             rutaCentroId,
-            "Av. Juárez 123, Centro",
+            "Av. Juarez 123, Centro",
             20.5288,
             -100.8157,
             "Paquete pequeño - Documentos",
@@ -123,7 +123,7 @@ public class InicializadorDatos {
             "Calle Hidalgo 456, Centro",
             20.5295,
             -100.8165,
-            "Paquete mediano - Electrónicos",
+            "Paquete mediano - Electronicos",
             5.5
         ));
         
@@ -168,7 +168,7 @@ public class InicializadorDatos {
         
         rutaServicio.agregarEntregaARuta(rutaSurId, new Entrega(
             rutaSurId,
-            "Av. Revolución 987",
+            "Av. Revolucion 987",
             20.5050,
             -100.8150,
             "Paquete grande - Equipamiento",
