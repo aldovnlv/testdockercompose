@@ -61,7 +61,7 @@ public class VehiculoServicio {
             throw new IllegalArgumentException("El modelo del vehiculo es obligatorio");
         }
         if (vehiculo.getAnio() < 2000 || vehiculo.getAnio() > 2030) {
-            throw new IllegalArgumentException("El año del vehiculo debe estar entre 2000 y 2030");
+            throw new IllegalArgumentException("El anyo del vehiculo debe estar entre 2000 y 2030");
         }
         if (vehiculo.getCapacidadBateria() <= 0) {
             throw new IllegalArgumentException("La capacidad de bateria debe ser mayor a 0");

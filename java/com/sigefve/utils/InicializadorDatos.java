@@ -114,7 +114,7 @@ public class InicializadorDatos {
             "Av. Juarez 123, Centro",
             20.5288,
             -100.8157,
-            "Paquete pequeño - Documentos",
+            "Paquete pequenyo - Documentos",
             2.0
         ));
         
@@ -153,7 +153,7 @@ public class InicializadorDatos {
             "Av. Sur 321",
             20.5100,
             -100.8100,
-            "Paquete pequeño - Farmacia",
+            "Paquete pequenyo - Farmacia",
             1.5
         ));
         
