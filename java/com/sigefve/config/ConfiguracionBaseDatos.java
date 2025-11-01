@@ -15,8 +15,11 @@ public class ConfiguracionBaseDatos {
     
     private ConfiguracionBaseDatos() {
         try {
+            System.out.println(" ----------- try ---------");
             Class.forName("org.postgresql.Driver");
+            System.out.println(" ----------- class ---------");
             inicializarEsquema();
+            System.out.println(" ----------- esquema ---------");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Driver PostgreSQL no encontrado", e);
         }
