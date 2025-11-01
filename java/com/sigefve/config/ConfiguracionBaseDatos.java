@@ -124,7 +124,7 @@ public class ConfiguracionBaseDatos {
                 stmt.execute(sql);
             }
             
-            System.out.println("✓ Esquema de base de datos inicializado correctamente");
+            System.out.println("Esquema de base de datos inicializado correctamente");
             
         } catch (SQLException e) {
             System.err.println("Error al inicializar esquema: " + e.getMessage());

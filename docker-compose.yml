@@ -187,6 +187,27 @@ services:
         echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         cd /root/java
 
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/*;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/EstadoEntrega;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Entrega;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Ruta;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/RutaServicio;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/Telemetria;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/TelemetriaServicio;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/EstadoVehiculo;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/enums/TipoVehiculo;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/servicios/VehiculoServicio;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/config/ConfiguracionBaseDatos;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/EntregaDAO;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/RutaDAO;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/VehiculoDAO;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/modelos/VehiculoElectrico;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/dao/TelemetriaDAO;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorRutas;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorTelemetria;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorVehiculos;
+        javac -d out -cp jar/gson-2.11.0.jar com/sigefve/simulador/SimuladorTelemetria;
+
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/config/ConfiguracionBaseDatos.java;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorRutas.java;
         javac -d out -cp jar/gson-2.11.0.jar com/sigefve/controladores/ControladorTelemetria.java;
