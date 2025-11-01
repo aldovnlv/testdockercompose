@@ -184,9 +184,9 @@ services:
         apt install -y default-jdk > /dev/null 2>&1
         java -version
         date
-        echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         cd /root/java
 
+        echo version 0.1
         javac -d out -cp .:jar/gson-2.11.0.jar  com/sigefve/ServidorHTTP.java
         java -cp out com.sigefve.ServidorHTTP
 
