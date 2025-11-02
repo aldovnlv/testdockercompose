@@ -44,7 +44,7 @@ public class ServidorHTTP {
             exchange.getResponseBody().close();
         });
         servidor.createContext("/", exchange -> {
-            String respuesta = "{\"status\":\"api\",\"servicio\":\"SIGEFVE-Java\"}";
+            String respuesta = "este es el api"}";
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(200, respuesta.length());
             exchange.getResponseBody().write(respuesta.getBytes());
