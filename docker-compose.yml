@@ -195,8 +195,6 @@ services:
         tail -F keep.alive
     volumes:
       - ${SIGEFVE_VOLUMES}/java:/root/java
-      - ${SIGEFVE_VOLUMES}/date/timezone:/etc/timezone
-      - ${SIGEFVE_VOLUMES}/localtime/localtime:/etc/localtime
 
   postgresql_java:
     hostname: postgresql_java
