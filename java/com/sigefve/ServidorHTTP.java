@@ -47,6 +47,8 @@ public class ServidorHTTP {
             String respuesta = '
             Este es el api.<br>
             A continuacion se muestran los endpoint:<br>
+
+
             API REST Endpoints
 Veh&iacute;culos
 GET /vehiculos
@@ -101,7 +103,7 @@ Query params: ?limite=100 (opcional, default: 100)
 Response: 200 OK con array de telemetr&iacute;a
 GET /telemetria/vehiculo/:id/ultima
 
-Obtener la última telemetr&iacute;a de un veh&iacute;culo
+Obtener la $uacute;ltima telemetr&iacute;a de un veh&iacute;culo
 Response: 200 OK con telemetr&iacute;a o 404 Not Found
 POST /telemetria
 
@@ -145,7 +147,7 @@ POST /rutas/:id/entregas
 Agregar una entrega a una ruta
 Body:
 {
-  "direccionDestino": "Av. Juárez 123",
+  "direccionDestino": "Av. Ju&aacute;rez 123",
   "latitud": 20.5288,
   "longitud": -100.8157,
   "descripcionPaquete": "Documentos importantes",
@@ -160,12 +162,15 @@ Body:
   "vehiculoId": 1
 }
 Response: 200 OK
-Nota: Cambia automáticamente el estado del veh&iacute;culo a EN_RUTA
+Nota: Cambia autom&aacute;ticamente el estado del veh&iacute;culo a EN_RUTA
 PUT /rutas/:id/completar
 
 Marcar una ruta como completada
 Response: 200 OK
-Nota: Cambia automáticamente el estado del veh&iacute;culo a DISPONIBLE
+Nota: Cambia autom&aacute;ticamente el estado del veh&iacute;culo a DISPONIBLE
+
+
+
             ';
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, respuesta.length());
