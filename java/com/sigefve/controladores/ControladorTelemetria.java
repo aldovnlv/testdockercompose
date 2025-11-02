@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.LocalDate;
+import java.time.LocalDate;
 
 public class ControladorTelemetria implements HttpHandler {
     private final TelemetriaServicio telemetriaServicio;
