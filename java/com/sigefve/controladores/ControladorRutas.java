@@ -15,13 +15,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.gson.GsonBuilder;
+import com.sigefve.adapters.LocalDateTimeTypeAdapter;
+import java.time.LocalDateTime;
+
 public class ControladorRutas implements HttpHandler {
     private final RutaServicio rutaServicio;
     private final Gson gson;
 
     public ControladorRutas() {
         this.rutaServicio = new RutaServicio();
-        this.gson = new Gson();
+        // this.gson = new Gson();
+        this.gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+            .create();
     }
 
     @Override
