@@ -1,5 +1,26 @@
 package com.sigefve.adapters;
 
+// import com.google.gson.Gson;
+// import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializer; //
+import com.google.gson.JsonDeserializer; //
+// import com.google.gson.*;
+// import com.sigefve.modelos.Telemetria;
+// import com.sigefve.servicios.TelemetriaServicio;
+// import com.sun.net.httpserver.HttpExchange;
+// import com.sun.net.httpserver.HttpHandler;
+
+// import java.io.IOException;
+// import java.io.OutputStream;
+// import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter; //
+// import java.util.List;
+// import java.util.Map;
+import java.time.LocalDate;
+
+import java.lang.reflect.Type;
+
 public class LocalDateTimeTypeAdapter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss");
