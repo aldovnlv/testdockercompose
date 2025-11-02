@@ -43,7 +43,7 @@ public class ControladorTelemetria implements HttpHandler {
             } else if (metodo.equals("POST")) {
                 manejarPOST(exchange);
             } else {
-                enviarError(exchange, 405, "Método no permitido");
+                enviarError(exchange, 405, "Metodo no permitido");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, "Error interno: " + e.getMessage());
