@@ -62,6 +62,7 @@ public class ControladorTelemetria implements HttpHandler {
                 Telemetria telemetria = telemetriaServicio.obtenerUltimaTelemetria(vehiculoId);
                                     this.redflag += " telemetria";
                 if (telemetria != null) {
+                                    this.redflag += " not null";
                     enviarJSON(exchange, 200, telemetria);
                 } else {
                     enviarError(exchange, 404, "No hay telemetria para este vehiculo");
