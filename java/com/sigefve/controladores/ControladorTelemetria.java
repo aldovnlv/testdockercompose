@@ -51,7 +51,7 @@ public class ControladorTelemetria implements HttpHandler {
     }
 
     private void manejarGET(HttpExchange exchange, String[] partes) throws IOException {
-        try {
+       // try {
             // GET /telemetria/vehiculo/:id/ultima
             if (partes.length >= 5 && partes[4].equals("ultima")) {
                 Long vehiculoId = Long.parseLong(partes[3]);
@@ -81,9 +81,9 @@ public class ControladorTelemetria implements HttpHandler {
             } else {
                 enviarError(exchange, 400, "ID de vehiculo requerido");
             }
-        } catch (Exception e) {
-            enviarError(exchange, 500, e.getMessage());
-        }
+        // } catch (Exception e) {
+        //     enviarError(exchange, 500, e.getMessage());
+        // }
     }
 
     private void manejarPOST(HttpExchange exchange) throws IOException {
