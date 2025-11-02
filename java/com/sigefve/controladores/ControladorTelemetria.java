@@ -21,7 +21,10 @@ public class ControladorTelemetria implements HttpHandler {
 
     public ControladorTelemetria() {
         this.telemetriaServicio = new TelemetriaServicio();
-        this.gson = new Gson();
+        // this.gson = new Gson();
+        this.gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateTimeTypeAdapter())
+            .create();
     }
 
     @Override
@@ -135,6 +138,7 @@ public class ControladorTelemetria implements HttpHandler {
     }
 
     private void enviarJSON(HttpExchange exchange, int codigo, Object obj) throws IOException {
+
         String json = gson.toJson(obj);
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         enviarRespuesta(exchange, codigo, json);
@@ -153,4 +157,21 @@ public class ControladorTelemetria implements HttpHandler {
             os.write(bytes);
         }
     }
+}
+/////////////////////
+class LocalDateTypeAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
+
+  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+  @Override
+  public JsonElement serialize(final LocalDate date, final Type typeOfSrc,
+      final JsonSerializationContext context) {
+    return new JsonPrimitive(date.format(formatter));
+  }
+
+  @Override
+  public LocalDate deserialize(final JsonElement json, final Type typeOfT,
+      final JsonDeserializationContext context) throws JsonParseException {
+    return LocalDate.parse(json.getAsString(), formatter);
+  }
 }
