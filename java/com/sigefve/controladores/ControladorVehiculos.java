@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import com.google.gson.GsonBuilder;
 import com.sigefve.adapters.LocalDateTimeTypeAdapter;
+import java.time.LocalDateTime;
 
 public class ControladorVehiculos implements HttpHandler {
     private final VehiculoServicio vehiculoServicio;
