@@ -44,26 +44,26 @@ public class ServidorHTTP {
             exchange.getResponseBody().close();
         });
         servidor.createContext("/", exchange -> {
-            String respuesta = "
+            String respuesta = '
             Este es el api.<br>
             A continuacion se muestran los endpoint:<br>
             API REST Endpoints
-Vehículos
+Veh&iacute;culos
 GET /vehiculos
 
-Obtener todos los vehículos
-Response: 200 OK con array de vehículos
+Obtener todos los veh&iacute;culos
+Response: 200 OK con array de veh&iacute;culos
 GET /vehiculos/:id
 
-Obtener un vehículo por ID
-Response: 200 OK con vehículo o 404 Not Found
+Obtener un veh&iacute;culo por ID
+Response: 200 OK con veh&iacute;culo o 404 Not Found
 GET /vehiculos?estado=DISPONIBLE
 
-Filtrar vehículos por estado
-Response: 200 OK con array de vehículos
+Filtrar veh&iacute;culos por estado
+Response: 200 OK con array de veh&iacute;culos
 POST /vehiculos
 
-Crear un nuevo vehículo
+Crear un nuevo veh&iacute;culo
 Body ejemplo:
 {
   "tipo": "VAN",
@@ -75,15 +75,15 @@ Body ejemplo:
   "capacidadCarga": 1500.0,
   "numeroAsientos": 3
 }
-Response: 201 Created con ID del vehículo
+Response: 201 Created con ID del veh&iacute;culo
 PUT /vehiculos/:id
 
-Actualizar un vehículo completo
+Actualizar un veh&iacute;culo completo
 Body: Mismo formato que POST
 Response: 200 OK
 PUT /vehiculos/:id/estado
 
-Cambiar solo el estado de un vehículo
+Cambiar solo el estado de un veh&iacute;culo
 Body:
 {
   "estado": "EN_RUTA"
@@ -91,21 +91,21 @@ Body:
 Response: 200 OK
 DELETE /vehiculos/:id
 
-Eliminar un vehículo
+Eliminar un veh&iacute;culo
 Response: 200 OK o 404 Not Found
-Telemetría
+Telemetr&iacute;a
 GET /telemetria/vehiculo/:id
 
-Obtener historial de telemetría de un vehículo
+Obtener historial de telemetr&iacute;a de un veh&iacute;culo
 Query params: ?limite=100 (opcional, default: 100)
-Response: 200 OK con array de telemetría
+Response: 200 OK con array de telemetr&iacute;a
 GET /telemetria/vehiculo/:id/ultima
 
-Obtener la última telemetría de un vehículo
-Response: 200 OK con telemetría o 404 Not Found
+Obtener la última telemetr&iacute;a de un veh&iacute;culo
+Response: 200 OK con telemetr&iacute;a o 404 Not Found
 POST /telemetria
 
-Registrar nueva telemetría (normalmente usado por el simulador)
+Registrar nueva telemetr&iacute;a (normalmente usado por el simulador)
 Body:
 {
   "vehiculoId": 1,
@@ -128,7 +128,7 @@ Obtener una ruta por ID (incluye entregas)
 Response: 200 OK con ruta o 404 Not Found
 GET /rutas/:id/entregas
 
-Obtener entregas de una ruta específica
+Obtener entregas de una ruta espec&iacute;fica
 Response: 200 OK con array de entregas
 POST /rutas
 
@@ -154,19 +154,19 @@ Body:
 Response: 201 Created con ID
 PUT /rutas/:id/asignar
 
-Asignar un vehículo a una ruta
+Asignar un veh&iacute;culo a una ruta
 Body:
 {
   "vehiculoId": 1
 }
 Response: 200 OK
-Nota: Cambia automáticamente el estado del vehículo a EN_RUTA
+Nota: Cambia automáticamente el estado del veh&iacute;culo a EN_RUTA
 PUT /rutas/:id/completar
 
 Marcar una ruta como completada
 Response: 200 OK
-Nota: Cambia automáticamente el estado del vehículo a DISPONIBLE
-            ";
+Nota: Cambia automáticamente el estado del veh&iacute;culo a DISPONIBLE
+            ';
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, respuesta.length());
             exchange.getResponseBody().write(respuesta.getBytes());
