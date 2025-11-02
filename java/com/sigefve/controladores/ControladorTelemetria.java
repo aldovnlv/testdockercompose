@@ -19,8 +19,7 @@ public class ControladorTelemetria implements HttpHandler {
     private final TelemetriaServicio telemetriaServicio;
     private final Gson gson;
 
-    private String redflag = null;
-    this.redflag = "0k - <br>";
+    private String redflag = "/m\n - ";
 
     public ControladorTelemetria() {
         this.telemetriaServicio = new TelemetriaServicio();
