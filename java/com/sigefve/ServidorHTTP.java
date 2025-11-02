@@ -44,7 +44,7 @@ public class ServidorHTTP {
             exchange.getResponseBody().close();
         });
         servidor.createContext("/", exchange -> {
-            String respuesta = "este es el api"}";
+            String respuesta = "Este es el api.<br>A continuacion se muestran los endpoint";
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(200, respuesta.length());
             exchange.getResponseBody().write(respuesta.getBytes());
