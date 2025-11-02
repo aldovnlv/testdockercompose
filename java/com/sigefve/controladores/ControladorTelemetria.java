@@ -19,6 +19,8 @@ public class ControladorTelemetria implements HttpHandler {
     private final TelemetriaServicio telemetriaServicio;
     private final Gson gson;
 
+    private String redflag = "0k - ";
+
     public ControladorTelemetria() {
         this.telemetriaServicio = new TelemetriaServicio();
         this.gson = new Gson();
@@ -51,12 +53,14 @@ public class ControladorTelemetria implements HttpHandler {
     }
 
     private void manejarGET(HttpExchange exchange, String[] partes) throws IOException {
+        
         try {
             // GET /telemetria/vehiculo/:id/ultima
             if (partes.length >= 5 && partes[4].equals("ultima")) {
                 Long vehiculoId = Long.parseLong(partes[3]);
+                                    this.redflag += vehiculoId;
                 Telemetria telemetria = telemetriaServicio.obtenerUltimaTelemetria(vehiculoId);
-                
+                                    this.redflag += " telemetria";
                 if (telemetria != null) {
                     enviarJSON(exchange, 200, telemetria);
                 } else {
@@ -82,7 +86,7 @@ public class ControladorTelemetria implements HttpHandler {
                 enviarError(exchange, 400, "ID de vehiculo requerido");
             }
         } catch (Exception e) {
-            enviarError(exchange, 500, e.getMessage() + " ******************");
+            enviarError(exchange, 500, e.getMessage() + " ******************" + redflag);
         }
     }
 
@@ -135,6 +139,7 @@ public class ControladorTelemetria implements HttpHandler {
     }
 
     private void enviarJSON(HttpExchange exchange, int codigo, Object obj) throws IOException {
+        this.redflag += " - json";
         String json = gson.toJson(obj);
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         enviarRespuesta(exchange, codigo, json);
