@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.*;
 import com.sigefve.modelos.Telemetria;
 import com.sigefve.servicios.TelemetriaServicio;
+import com.sigefve.adapters.LocalDateTimeTypeAdapter;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -29,7 +30,7 @@ public class ControladorTelemetria implements HttpHandler {
         this.telemetriaServicio = new TelemetriaServicio();
         // this.gson = new Gson();
         this.gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDate.class, new LocalDateTimeTypeAdapter())
+            .registerTypeAdapter(LocalDateTimeType.class, new LocalDateTimeTypeAdapter())
             .create();
     }
 
@@ -91,7 +92,7 @@ public class ControladorTelemetria implements HttpHandler {
                 enviarError(exchange, 400, "ID de vehiculo requerido");
             }
         } catch (Exception e) {
-            enviarError(exchange, 500, e.getClass().getName() + ":" + e.getMessage());
+            enviarError(exchange, 500, e.getClass().getName() + " :> " + e.getMessage());
         }
     }
 
@@ -163,23 +164,4 @@ public class ControladorTelemetria implements HttpHandler {
             os.write(bytes);
         }
     }
-}
-/////////////////////
-class LocalDateTimeTypeAdapter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
-
-  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss");
-
-  @Override
-  public JsonElement serialize(LocalDateTime localDateTime, Type srcType,
-      JsonSerializationContext context) {
-    
-    return new JsonPrimitive(formatter.format(localDateTime));
-  }
-
-  @Override
-  public LocalDateTime deserialize(JsonElement json, Type typeOfT,
-      JsonDeserializationContext context) throws JsonParseException {
-
-    return LocalDateTime.parse(json.getAsString(), formatter);
-  }
 }
