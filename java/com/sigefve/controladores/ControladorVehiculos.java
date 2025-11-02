@@ -16,13 +16,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.google.gson.GsonBuilder;
+import com.sigefve.adapters.LocalDateTimeTypeAdapter;
+
 public class ControladorVehiculos implements HttpHandler {
     private final VehiculoServicio vehiculoServicio;
     private final Gson gson;
 
     public ControladorVehiculos() {
         this.vehiculoServicio = new VehiculoServicio();
-        this.gson = new Gson();
+        // this.gson = new Gson();
+        this.gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+            .create();
     }
 
     @Override
