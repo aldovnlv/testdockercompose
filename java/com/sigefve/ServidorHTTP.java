@@ -43,6 +43,13 @@ public class ServidorHTTP {
             exchange.getResponseBody().write(respuesta.getBytes());
             exchange.getResponseBody().close();
         });
+        servidor.createContext("/", exchange -> {
+            String respuesta = "{\"status\":\"api\",\"servicio\":\"SIGEFVE-Java\"}";
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, respuesta.length());
+            exchange.getResponseBody().write(respuesta.getBytes());
+            exchange.getResponseBody().close();
+        });
         
         servidor.start();
         System.out.println("Servidor HTTP iniciado en puerto " + PUERTO);
