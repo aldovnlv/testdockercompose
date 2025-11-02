@@ -4,6 +4,8 @@ package com.sigefve.adapters;
 // import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializer; //
 import com.google.gson.JsonDeserializer; //
+import com.google.gson.JsonSerializationContext;
+// import com.google.gson.JsonDeserializationContext;
 // import com.google.gson.*;
 // import com.sigefve.modelos.Telemetria;
 // import com.sigefve.servicios.TelemetriaServicio;
