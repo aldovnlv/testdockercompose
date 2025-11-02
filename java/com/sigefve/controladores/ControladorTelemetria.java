@@ -30,7 +30,7 @@ public class ControladorTelemetria implements HttpHandler {
         this.telemetriaServicio = new TelemetriaServicio();
         // this.gson = new Gson();
         this.gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDateTimeType.class, new LocalDateTimeTypeAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
             .create();
     }
 
