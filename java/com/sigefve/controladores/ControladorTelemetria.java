@@ -3,6 +3,7 @@ package com.sigefve.controladores;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializer;
+import com.google.gson.JsonDeserializer;
 import com.sigefve.modelos.Telemetria;
 import com.sigefve.servicios.TelemetriaServicio;
 import com.sun.net.httpserver.HttpExchange;
