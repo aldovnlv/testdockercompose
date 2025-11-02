@@ -2,9 +2,9 @@ package com.sigefve.controladores;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializer;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.*;
+// import com.google.gson.JsonSerializer;
+// import com.google.gson.JsonDeserializer;
+// import com.google.gson.*;
 import com.sigefve.modelos.Telemetria;
 import com.sigefve.servicios.TelemetriaServicio;
 import com.sigefve.adapters.LocalDateTimeTypeAdapter;
@@ -14,11 +14,11 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 
 import java.lang.reflect.Type;
 
