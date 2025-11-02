@@ -86,7 +86,7 @@ public class ControladorTelemetria implements HttpHandler {
                 enviarError(exchange, 400, "ID de vehiculo requerido");
             }
         } catch (Exception e) {
-            enviarError(exchange, 500, e.getMessage() + " ******************" + redflag);
+            enviarError(exchange, 500, e.getMessage() + " ****************** " + redflag);
         }
     }
 
@@ -141,7 +141,9 @@ public class ControladorTelemetria implements HttpHandler {
     private void enviarJSON(HttpExchange exchange, int codigo, Object obj) throws IOException {
         this.redflag += " - json";
         String json = gson.toJson(obj);
+        this.redflag += " - gson";
         exchange.getResponseHeaders().set("Content-Type", "application/json");
+        this.redflag += " - headers";
         enviarRespuesta(exchange, codigo, json);
     }
 
@@ -152,10 +154,13 @@ public class ControladorTelemetria implements HttpHandler {
     }
 
     private void enviarRespuesta(HttpExchange exchange, int codigo, String respuesta) throws IOException {
+        this.redflag += " - respuesta";
         byte[] bytes = respuesta.getBytes(StandardCharsets.UTF_8);
+        this.redflag += " - encode";
         exchange.sendResponseHeaders(codigo, bytes.length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(bytes);
+        this.redflag += " - write";
         }
     }
 }
