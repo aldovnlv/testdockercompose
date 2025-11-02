@@ -165,19 +165,21 @@ public class ControladorTelemetria implements HttpHandler {
     }
 }
 /////////////////////
-class LocalDateTypeAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
+public class LocalDateTimeTypeAdapter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
 
-  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss");
 
   @Override
-  public JsonElement serialize(final LocalDate date, final Type typeOfSrc,
-      final JsonSerializationContext context) {
-    return new JsonPrimitive(date.format(formatter));
+  public JsonElement serialize(LocalDateTime localDateTime, Type srcType,
+      JsonSerializationContext context) {
+    
+    return new JsonPrimitive(formatter.format(localDateTime));
   }
 
   @Override
-  public LocalDate deserialize(final JsonElement json, final Type typeOfT,
-      final JsonDeserializationContext context) throws JsonParseException {
-    return LocalDate.parse(json.getAsString(), formatter);
+  public LocalDateTime deserialize(JsonElement json, Type typeOfT,
+      JsonDeserializationContext context) throws JsonParseException {
+
+    return LocalDateTime.parse(json.getAsString(), formatter);
   }
 }
