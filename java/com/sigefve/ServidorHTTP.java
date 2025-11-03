@@ -85,6 +85,401 @@ public class ServidorHTTP {
       <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(90deg,#042f3a,#063141);display:flex;align-items:center;justify-content:center;font-weight:700">SIG</div>
       <div>
         <h1>SIGEFVE - Demo cliente API (single page)</h1>
+                <div class="muted small">Interfaz de pruebas para los endpoints: Veh&iacute;culos, Telemetr&iacute;a y Rutas</div>
+      </div>
+    </header>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div class="controls">
+          <label class="small">Base URL (ej. http://localhost:3000)</label>
+          <input id="baseUrl" type="text" placeholder="http://localhost:3000" value="http://localhost:3000">
+          <button id="btnPing" class="secondary">Probar API</button>
+          <span id="pingResult" class="muted small" style="align-self:center;margin-left:6px"></span>
+        </div>
+        <div>
+          <span class="pill">CORS: la API debe permitir or&iacute;genes</span>
+        </div>
+      </div>
+
+      <nav id="mainTabs" style="margin-top:12px">
+        <button data-tab="vehiculos" class="active">Veh&iacute;culos</button>
+        <button data-tab="telemetria">Telemetr&iacute;a</button>
+        <button data-tab="rutas">Rutas</button>
+        <button data-tab="raw">Raw / Consola</button>
+      </nav>
+
+      <div class="grid">
+        <main class="card" id="contentMain" style="overflow:auto">
+          <!-- dynamic content here -->
+        </main>
+
+        <aside class="card">
+          <div>
+            <strong>Registro / Consola</strong>
+            <div id="log" class="log"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <footer style="margin-top:12px;text-align:center;color:var(--muted);font-size:13px">Demo UI - endpoints seg&uacute;n especificaci&oacute;n proporcionada. Aseg&uacute;rate de que la API soporte JSON y CORS.</footer>
+  </div>
+
+  <script>
+    // ---------- helpers
+    const $ = sel => document.querySelector(sel)
+    const baseUrlInput = $('#baseUrl')
+    const logEl = $('#log')
+
+    function log(msg, type='info'){
+      const time = new Date().toLocaleTimeString()
+      const el = document.createElement('div')
+      el.innerHTML = `<span style="color:#7f8fa4;font-size:12px">[${time}]</span> ${msg}`
+      logEl.prepend(el)
+    }
+
+    async function apiFetch(path, opts={}){
+      const url = (baseUrlInput.value.replace(/\/+$/,'')||'http://localhost:3000') + path
+      log(`<strong>FETCH</strong> ${opts.method || 'GET'} ${url}`)
+      try{
+        const res = await fetch(url, {...opts, headers:{'Content-Type':'application/json', ...(opts.headers||{})}})
+        const text = await res.text()
+        let data
+        try{ data = text ? JSON.parse(text) : null }catch(e){ data = text }
+        log(`<em>RESPONSE</em> ${res.status} ${res.statusText} - ${typeof data==='string'?data:JSON.stringify(data)}`)
+        if(!res.ok) throw {status: res.status, data}
+        return {status:res.status, data}
+      }catch(err){
+        log(`<span style="color:#ff7b7b">ERROR</span> ${err.status||''} ${err.message||JSON.stringify(err.data||err)} `)
+        throw err
+      }
+    }
+
+    // ---------- Tabs
+    document.getElementById('mainTabs').addEventListener('click', e=>{
+      if(e.target.matches('button')){
+        document.querySelectorAll('#mainTabs button').forEach(b=>b.classList.remove('active'))
+        e.target.classList.add('active')
+        showTab(e.target.dataset.tab)
+      }
+    })
+
+    function showTab(tab){
+      const main = $('#contentMain')
+      if(tab==='vehiculos') return renderVehiculos(main)
+      if(tab==='telemetria') return renderTelemetria(main)
+      if(tab==='rutas') return renderRutas(main)
+      if(tab==='raw') return renderRaw(main)
+    }
+
+    // ---------- VEH&iacute;CULOS UI
+    async function renderVehiculos(container){
+      container.innerHTML = `
+        <h3>Veh&iacute;culos</h3>
+        <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap">
+          <div style="min-width:220px">
+            <label>ID (para GET/PUT/DELETE)</label>
+            <input id="vehId" type="text" placeholder="ej. 1">
+          </div>
+          <div>
+            <button id="btnList">Listar todos</button>
+            <button id="btnGet">Obtener</button>
+            <button id="btnDelete" class="secondary">Eliminar</button>
+          </div>
+        </div>
+
+        <hr>
+
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <section style="flex:1">
+            <h4>Crear / Actualizar veh&iacute;culo</h4>
+            <div id="formVeh">
+              <label>tipo</label><input id="f_tipo" type="text" value="VAN">
+              <label>placa</label><input id="f_placa" type="text" value="VAN-001">
+              <label>modelo</label><input id="f_modelo" type="text" value="Mercedes eSprinter">
+              <div class="form-row">
+                <div>
+                  <label>anio</label><input id="f_anio" type="number" value="2023">
+                </div>
+                <div>
+                  <label>capacidadBateria (kWh)</label><input id="f_capacidadBateria" type="number" value="90">
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label>autonomiaMaxima (km)</label><input id="f_autonomiaMaxima" type="number" value="150">
+                </div>
+                <div>
+                  <label>capacidadCarga (kg)</label><input id="f_capacidadCarga" type="number" value="1500">
+                </div>
+              </div>
+              <label>numeroAsientos</label><input id="f_numeroAsientos" type="number" value="3">
+              <div style="margin-top:8px">
+                <button id="btnCreate">Crear (POST)</button>
+                <button id="btnPut" class="secondary">Actualizar completo (PUT /vehiculos/:id)</button>
+                <button id="btnChangeEstado" class="secondary">Cambiar estado (PUT /vehiculos/:id/estado)</button>
+              </div>
+            </div>
+          </section>
+
+          <section style="width:320px">
+            <h4>Resultado / Lista</h4>
+            <div id="vehList" style="max-height:420px;overflow:auto"></div>
+          </section>
+        </div>
+      `
+
+      document.getElementById('btnList').onclick = async()=>{
+        try{ const r = await apiFetch('/vehiculos'); showVehList(r.data) }catch(e){}
+      }
+      document.getElementById('btnGet').onclick = async()=>{
+        const id = $('#vehId').value.trim(); if(!id){alert('ID requerido');return}
+        try{ const r = await apiFetch(`/vehiculos/${id}`); showVehDetail(r.data) }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+      document.getElementById('btnDelete').onclick = async()=>{
+        const id = $('#vehId').value.trim(); if(!id){alert('ID requerido');return}
+        if(!confirm('Eliminar veh&iacute;culo '+id+'?')) return
+        try{ await apiFetch(`/vehiculos/${id}`,{method:'DELETE'}); alert('Eliminado') }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+
+      document.getElementById('btnCreate').onclick = async()=>{
+        const body = readVehForm()
+        try{ const r = await apiFetch('/vehiculos', {method:'POST', body: JSON.stringify(body)}); alert('Creado ID: '+r.data) }catch(e){}
+      }
+
+      document.getElementById('btnPut').onclick = async()=>{
+        const id = $('#vehId').value.trim(); if(!id){alert('ID requerido');return}
+        const body = readVehForm()
+        try{ await apiFetch(`/vehiculos/${id}`,{method:'PUT', body: JSON.stringify(body)}); alert('Actualizado') }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+
+      document.getElementById('btnChangeEstado').onclick = async()=>{
+        const id = $('#vehId').value.trim(); if(!id){alert('ID requerido');return}
+        const nuevo = prompt('Nuevo estado (ej. EN_RUTA o DISPONIBLE)')
+        if(!nuevo) return
+        try{ await apiFetch(`/vehiculos/${id}/estado`,{method:'PUT', body: JSON.stringify({estado:nuevo})}); alert('Estado cambiado') }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+
+      // auto-list
+      try{ const r = await apiFetch('/vehiculos'); showVehList(r.data) }catch(e){}
+    }
+
+    function readVehForm(){
+      return {
+        tipo: $('#f_tipo').value,
+        placa: $('#f_placa').value,
+        modelo: $('#f_modelo').value,
+        anio: Number($('#f_anio').value)||0,
+        capacidadBateria: Number($('#f_capacidadBateria').value)||0,
+        autonomiaMaxima: Number($('#f_autonomiaMaxima').value)||0,
+        capacidadCarga: Number($('#f_capacidadCarga').value)||0,
+        numeroAsientos: Number($('#f_numeroAsientos').value)||0
+      }
+    }
+
+    function showVehList(list){
+      const el = document.getElementById('vehList')
+      if(!list || !list.length){ el.innerHTML = '<div class="muted">No hay veh&iacute;culos</div>'; return }
+      const rows = list.map(v=>{
+        const s = v.estado ? `<span class="pill status-${v.estado}">${v.estado}</span>` : ''
+        return `<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.02);">
+          <strong>${v.id ? v.id+' - ' : ''}${v.placa || ''}</strong> ${s}<div class="muted">${v.tipo || ''} • ${v.modelo || ''} • ${v.anio || ''}</div>
+          <div style="margin-top:6px"><button onclick="fetchVeh(${v.id})">Ver</button> <button onclick="prefillVeh(${encodeURIComponent(JSON.stringify(v))})" class="secondary">Editar</button></div>
+        </div>`
+      }).join('')
+      el.innerHTML = rows
+    }
+
+    window.fetchVeh = async function(id){
+      try{ const r = await apiFetch('/vehiculos/'+id); showVehDetail(r.data) }catch(e){if(e.status===404) alert('No encontrado')}
+    }
+
+    window.prefillVeh = function(encoded){
+      const v = JSON.parse(decodeURIComponent(encoded))
+      $('#vehId').value = v.id || ''
+      $('#f_tipo').value = v.tipo || ''
+      $('#f_placa').value = v.placa || ''
+      $('#f_modelo').value = v.modelo || ''
+      $('#f_anio').value = v.anio || ''
+      $('#f_capacidadBateria').value = v.capacidadBateria || ''
+      $('#f_autonomiaMaxima').value = v.autonomiaMaxima || ''
+      $('#f_capacidadCarga').value = v.capacidadCarga || ''
+      $('#f_numeroAsientos').value = v.numeroAsientos || ''
+    }
+
+    function showVehDetail(v){
+      const el = document.getElementById('vehList')
+      el.innerHTML = `<pre>${JSON.stringify(v, null, 2)}</pre>`
+    }
+
+    // ---------- TELEMETR&iacute;A UI
+    async function renderTelemetria(container){
+      container.innerHTML = `
+        <h3>Telemetr&iacute;a</h3>
+        <div style="display:flex;gap:8px;align-items:end;margin-bottom:8px">
+          <div>
+            <label>ID veh&iacute;culo</label>
+            <input id="t_vid" type="text" placeholder="1">
+          </div>
+          <div>
+            <label>l&iacute;mite</label>
+            <input id="t_limit" type="number" value="100">
+          </div>
+          <div>
+            <button id="t_list">Listar historial</button>
+            <button id="t_last">&uacute;ltima telemetr&iacute;a</button>
+          </div>
+        </div>
+
+        <h4>Registrar telemetr&iacute;a (simulador)</h4>
+        <div>
+          <label>vehiculoId</label><input id="t_vehId" type="number" value="1">
+          <label>nivelBateria</label><input id="t_nivelBateria" type="number" value="75.5">
+          <label>latitud</label><input id="t_lat" type="number" value="20.5288">
+          <label>longitud</label><input id="t_lon" type="number" value="-100.8157">
+          <label>temperaturaMotor</label><input id="t_temp" type="number" value="45.2">
+          <label>velocidadActual</label><input id="t_vel" type="number" value="60">
+          <label>kilometrajeActual</label><input id="t_km" type="number" value="1250.5">
+          <div style="margin-top:8px"><button id="t_post">Registrar telemetr&iacute;a (POST)</button></div>
+        </div>
+
+        <hr>
+        <div id="t_result"></div>
+      `
+
+      document.getElementById('t_list').onclick = async()=>{
+        const id = $('#t_vid').value.trim(); if(!id){alert('ID requerido');return}
+        const lim = $('#t_limit').value || 100
+        try{ const r = await apiFetch(`/telemetria/vehiculo/${id}?limite=${lim}`); $('#t_result').innerHTML = `<pre>${JSON.stringify(r.data, null,2)}</pre>` }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+      document.getElementById('t_last').onclick = async()=>{
+        const id = $('#t_vid').value.trim(); if(!id){alert('ID requerido');return}
+        try{ const r = await apiFetch(`/telemetria/vehiculo/${id}/ultima`); $('#t_result').innerHTML = `<pre>${JSON.stringify(r.data, null,2)}</pre>` }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+      document.getElementById('t_post').onclick = async()=>{
+        const body = {
+          vehiculoId: Number($('#t_vehId').value), nivelBateria: Number($('#t_nivelBateria').value), latitud: Number($('#t_lat').value), longitud: Number($('#t_lon').value), temperaturaMotor: Number($('#t_temp').value), velocidadActual: Number($('#t_vel').value), kilometrajeActual: Number($('#t_km').value)
+        }
+        try{ const r = await apiFetch('/telemetria',{method:'POST', body: JSON.stringify(body)}); alert('Telemetr&iacute;a registrada ID: '+r.data) }catch(e){}
+      }
+    }
+
+    // ---------- RUTAS UI
+    async function renderRutas(container){
+      container.innerHTML = `
+        <h3>Rutas</h3>
+        <div style="display:flex;gap:8px;align-items:end">
+          <div>
+            <label>ID ruta</label><input id="r_id" type="text" placeholder="1">
+          </div>
+          <div>
+            <button id="r_list">Listar activas</button>
+            <button id="r_get">Obtener ruta</button>
+            <button id="r_entregas">Ver entregas</button>
+          </div>
+        </div>
+
+        <hr>
+        <div style="display:flex;gap:12px">
+          <section style="flex:1">
+            <h4>Crear ruta</h4>
+            <label>nombre</label><input id="r_nombre" type="text" value="Entregas Zona Centro">
+            <label>distanciaTotal</label><input id="r_dist" type="number" value="15.5">
+            <label>vehiculoId</label><input id="r_vid" type="number" value="1">
+            <div style="margin-top:8px"><button id="r_post">Crear ruta</button></div>
+
+            <h4 style="margin-top:12px">Agregar entrega a ruta</h4>
+            <label>rutaId</label><input id="re_rutaId" type="number" value="1">
+            <label>direccionDestino</label><input id="re_dir" type="text" value="Av. Ju&aacute;rez 123">
+            <label>latitud</label><input id="re_lat" type="number" value="20.5288">
+            <label>longitud</label><input id="re_lon" type="number" value="-100.8157">
+            <label>descripcionPaquete</label><input id="re_desc" type="text" value="Documentos importantes">
+            <label>pesoKg</label><input id="re_peso" type="number" value="2.5">
+            <div style="margin-top:8px"><button id="re_post">Agregar entrega</button></div>
+
+            <h4 style="margin-top:12px">Operaciones</h4>
+            <label>rutaId</label><input id="op_rid" type="number" value="1">
+            <label>vehiculoId (para asignar)</label><input id="op_vid" type="number" value="1">
+            <div style="margin-top:8px">
+              <button id="op_asign">Asignar veh&iacute;culo</button>
+              <button id="op_comp">Marcar completada</button>
+            </div>
+          </section>
+
+          <section style="width:340px">
+            <h4>Resultado</h4>
+            <div id="r_result"></div>
+          </section>
+        </div>
+      `
+
+      document.getElementById('r_list').onclick = async()=>{
+        try{ const r = await apiFetch('/rutas'); $('#r_result').innerHTML = `<pre>${JSON.stringify(r.data, null,2)}</pre>` }catch(e){}
+      }
+      document.getElementById('r_get').onclick = async()=>{
+        const id = $('#r_id').value.trim(); if(!id){alert('ID requerido');return}
+        try{ const r = await apiFetch(`/rutas/${id}`); $('#r_result').innerHTML = `<pre>${JSON.stringify(r.data, null,2)}</pre>` }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+      document.getElementById('r_entregas').onclick = async()=>{
+        const id = $('#r_id').value.trim(); if(!id){alert('ID requerido');return}
+        try{ const r = await apiFetch(`/rutas/${id}/entregas`); $('#r_result').innerHTML = `<pre>${JSON.stringify(r.data, null,2)}</pre>` }catch(e){if(e.status===404) alert('No encontrado')}
+      }
+
+      document.getElementById('r_post').onclick = async()=>{
+        const body = {nombre: $('#r_nombre').value, distanciaTotal: Number($('#r_dist').value)||0, vehiculoId: Number($('#r_vid').value)||null}
+        try{ const r = await apiFetch('/rutas',{method:'POST', body: JSON.stringify(body)}); alert('Ruta creada ID: '+r.data) }catch(e){}
+      }
+      document.getElementById('re_post').onclick = async()=>{
+        const rutaId = Number($('#re_rutaId').value)
+        const body = {direccionDestino: $('#re_dir').value, latitud: Number($('#re_lat').value), longitud: Number($('#re_lon').value), descripcionPaquete: $('#re_desc').value, pesoKg: Number($('#re_peso').value)}
+        try{ const r = await apiFetch(`/rutas/${rutaId}/entregas`,{method:'POST', body: JSON.stringify(body)}); alert('Entrega agregada ID: '+r.data) }catch(e){}
+      }
+
+      document.getElementById('op_asign').onclick = async()=>{
+        const id = $('#op_rid').value; const vid = Number($('#op_vid').value)
+        try{ await apiFetch(`/rutas/${id}/asignar`,{method:'PUT', body: JSON.stringify({vehiculoId: vid})}); alert('Veh&iacute;culo asignado') }catch(e){}
+      }
+      document.getElementById('op_comp').onclick = async()=>{
+        const id = $('#op_rid').value
+        try{ await apiFetch(`/rutas/${id}/completar`,{method:'PUT'}); alert('Ruta marcada como completada') }catch(e){}
+      }
+    }
+
+    // ---------- RAW / Consola
+    function renderRaw(container){
+      container.innerHTML = `
+        <h3>Raw / Peticiones manuales</h3>
+        <div>
+          <label>Path (ej. /vehiculos)</label>
+          <input id="raw_path" type="text" value="/vehiculos">
+          <label>M&eacute;todo</label>
+          <select id="raw_method"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>
+          <label>Body JSON (opcional)</label>
+          <textarea id="raw_body" rows="6" style="width:100%;background:#06121b;border-radius:8px;color:var(--muted);padding:8px"></textarea>
+          <div style="margin-top:8px"><button id="raw_send">Enviar</button></div>
+          <div id="raw_out" style="margin-top:8px"></div>
+        </div>
+      `
+      document.getElementById('raw_send').onclick = async()=>{
+        const path = $('#raw_path').value
+        const method = $('#raw_method').value
+        const body = $('#raw_body').value.trim()
+        try{ const r = await apiFetch(path, {method, body: body? body: undefined}); document.getElementById('raw_out').innerHTML = `<pre>${JSON.stringify(r.data, null,2)}</pre>` }catch(e){document.getElementById('raw_out').innerHTML = `<pre style="color:#ffb4b4">ERROR ${e.status||''}</pre>`}
+      }
+    }
+
+    // ---------- Ping button
+    $('#btnPing').onclick = async()=>{
+      const testPath = '/vehiculos'
+      try{ await apiFetch(testPath); $('#pingResult').textContent = 'OK' }catch(e){ $('#pingResult').textContent = 'Error' }
+    }
+
+    // init
+    showTab('vehiculos')
+  </script>
+</body>
+</html>
             """;
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, respuesta.length());
