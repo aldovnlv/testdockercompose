@@ -140,7 +140,7 @@ public class ServidorHTTP {
     }
 
     async function apiFetch(path, opts={}){
-      const url = (baseUrlInput.value.replace(/\/+$/,'')||'http://localhost:3000') + path
+      const url = (baseUrlInput.value.replace(/\\/+$/,'')||'http://localhost:3000') + path
       log(`<strong>FETCH</strong> ${opts.method || 'GET'} ${url}`)
       try{
         const res = await fetch(url, {...opts, headers:{'Content-Type':'application/json', ...(opts.headers||{})}})
@@ -284,7 +284,7 @@ public class ServidorHTTP {
       const rows = list.map(v=>{
         const s = v.estado ? `<span class="pill status-${v.estado}">${v.estado}</span>` : ''
         return `<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.02);">
-          <strong>${v.id ? v.id+' - ' : ''}${v.placa || ''}</strong> ${s}<div class="muted">${v.tipo || ''} • ${v.modelo || ''} • ${v.anio || ''}</div>
+          <strong>${v.id ? v.id+' - ' : ''}${v.placa || ''}</strong> ${s}<div class="muted">${v.tipo || ''} * ${v.modelo || ''} * ${v.anio || ''}</div>
           <div style="margin-top:6px"><button onclick="fetchVeh(${v.id})">Ver</button> <button onclick="prefillVeh(${encodeURIComponent(JSON.stringify(v))})" class="secondary">Editar</button></div>
         </div>`
       }).join('')
