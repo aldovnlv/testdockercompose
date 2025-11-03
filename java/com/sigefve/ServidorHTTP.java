@@ -80,7 +80,7 @@ function cp(t){navigator.clipboard.writeText(t.innerText)}
 <a href="#telemetria">Telemetr&iacute;a</a>
 <a href="#rutas">Rutas</a>
 </div>
-<div class="baseurlbox">Base URL: <input value="http://localhost:3000" style="width:250px"></div>
+<div class="baseurlbox">Base URL: <input value="https://tajava.xipatlani.tk" style="width:250px"></div>
 <div class="section" id="vehiculos">
 <h2>Veh&iacute;culos</h2>
 <div class="endpoint GET"><summary><span class="method GET">GET</span>/vehiculos</summary><div class="desc">Obtener todos los veh&iacute;culos</div></div>
@@ -192,8 +192,8 @@ function cp(t){navigator.clipboard.writeText(t.innerText)}
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
         <div class="controls">
-          <label class="small">Base URL (ej. http://localhost:3000)</label>
-          <input id="baseUrl" type="text" placeholder="http://localhost:3000" value="http://localhost:3000">
+          <label class="small">Base URL (ej. https://tajava.xipatlani.tk)</label>
+          <input id="baseUrl" type="text" placeholder="https://tajava.xipatlani.tk" value="https://tajava.xipatlani.tk">
           <button id="btnPing" class="secondary">Probar API</button>
           <span id="pingResult" class="muted small" style="align-self:center;margin-left:6px"></span>
         </div>
@@ -240,7 +240,7 @@ function cp(t){navigator.clipboard.writeText(t.innerText)}
     }
 
     async function apiFetch(path, opts={}){
-      const url = (baseUrlInput.value.replace(/\\/+$/,'')||'http://localhost:3000') + path
+      const url = (baseUrlInput.value.replace(/\\/+$/,'')||'https://tajava.xipatlani.tk') + path
       log(`<strong>FETCH</strong> ${opts.method || 'GET'} ${url}`)
       try{
         const res = await fetch(url, {...opts, headers:{'Content-Type':'application/json', ...(opts.headers||{})}})
