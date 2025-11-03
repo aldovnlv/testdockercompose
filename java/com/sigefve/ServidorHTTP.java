@@ -50,6 +50,7 @@ public class ServidorHTTP {
 <head>
 <meta charset="UTF-8" />
 <title>SIGEFVE API Documentation</title>
+<meta name="description" content="SIGEFVE: SIstema de GEstión de Flota de Vehículos Eléctricos (SIGEFVE) - Documentación de API REST">
 <style>
 body{font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;margin:0;padding:0}
 h1{background:#111;color:#fff;padding:20px;margin:0}
