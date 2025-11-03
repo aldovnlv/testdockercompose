@@ -45,14 +45,14 @@ public class ServidorHTTP {
         });
         servidor.createContext("/", exchange -> {
             String respuesta = """
-api<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SIGEFVE — Demo UI API (Single page)</title>
+  <title>SIGEFVE - Demo UI API (Single page)</title>
   <style>
-
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#06b6d4;--success:#16a34a}
             """;
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, respuesta.length());
