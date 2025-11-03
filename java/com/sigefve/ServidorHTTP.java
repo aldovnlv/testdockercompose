@@ -46,7 +46,12 @@ public class ServidorHTTP {
         servidor.createContext("/", exchange -> {
             String respuesta = """
             Este es el api.<br>
-            A continuacion se muestran los endpoint
+            A continuacion se muestran los endpoint:<br>
+
+
+            API REST Endpoints
+Veh&iacute;culos
+GET /vehiculos
             """;
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, respuesta.length());
