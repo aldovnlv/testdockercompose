@@ -37,6 +37,13 @@ public class ServidorHTTP {
         
         // Health check
         servidor.createContext("/health", exchange -> {
+            String respuesta = "{\"status\":\"OK\",\"servicio\":\"SIGEFVE-Java\"}";
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, respuesta.length());
+            exchange.getResponseBody().write(respuesta.getBytes());
+            exchange.getResponseBody().close();
+        });
+        servidor.createContext("/", exchange -> {
             String respuesta = """
             <!DOCTYPE html>
 <html lang="es">
@@ -113,13 +120,6 @@ pre{background:#222;color:#0f0;padding:10px;border-radius:6px;font-size:12px;ove
 </body>
 </html>
             """;
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(200, respuesta.length());
-            exchange.getResponseBody().write(respuesta.getBytes());
-            exchange.getResponseBody().close();
-        });
-        servidor.createContext("/", exchange -> {
-            String respuesta = "{\"status\":\"OK\",\"servicio\":\"SIGEFVE-Java\"}";
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, respuesta.length());
             exchange.getResponseBody().write(respuesta.getBytes());
