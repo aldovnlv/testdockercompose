@@ -44,6 +44,13 @@ public class ServidorHTTP {
             exchange.getResponseBody().close();
         });
         servidor.createContext("/", exchange -> {
+            String respuesta = "{\"status\":\"OK\",\"servicio\":\"SIGEFVE-Java\"}";
+            exchange.getResponseHeaders().set("Content-Type", "text/html");
+            exchange.sendResponseHeaders(200, respuesta.length());
+            exchange.getResponseBody().write(respuesta.getBytes());
+            exchange.getResponseBody().close();
+        });
+        servidor.createContext("/api-cliente", exchange -> {
             String respuesta = """
 <!doctype html>
 <html lang="es">
