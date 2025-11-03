@@ -37,7 +37,82 @@ public class ServidorHTTP {
         
         // Health check
         servidor.createContext("/health", exchange -> {
-            String respuesta = "{\"status\":\"OK\",\"servicio\":\"SIGEFVE-Java\"}";
+            String respuesta = """
+            <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>SIGEFVE API Documentation</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f7fb;margin:0;padding:0}
+h1{background:#111;color:#fff;padding:20px;margin:0}
+.section{border-bottom:1px solid #ddd;padding:20px}
+.endpoint{margin:10px 0;border-radius:6px;overflow:hidden;border:1px solid #ccc;background:#fff}
+.endpoint summary{cursor:pointer;padding:12px 15px;font-weight:bold;font-size:15px}
+.method{display:inline-block;padding:2px 6px;border-radius:4px;color:#fff;font-size:11px;margin-right:6px}
+.GET{background:#2ecc71}.POST{background:#3498db}.PUT{background:#f39c12}.DELETE{background:#e74c3c}
+.desc{padding:0 15px 15px 15px}
+pre{background:#222;color:#0f0;padding:10px;border-radius:6px;font-size:12px;overflow:auto}
+</style>
+</head>
+<body>
+<h1>SIGEFVE API Documentation</h1>
+<div class="section">
+<h2>Veh&iacute;culos</h2>
+<div class="endpoint"><summary><span class="method GET">GET</span>/vehiculos</summary><div class="desc">Obtener todos los veh&iacute;culos</div></div>
+<div class="endpoint"><summary><span class="method GET">GET</span>/vehiculos/:id</summary><div class="desc">Obtener un veh&iacute;culo por ID</div></div>
+<div class="endpoint"><summary><span class="method GET">GET</span>/vehiculos?estado=DISPONIBLE</summary><div class="desc">Filtrar veh&iacute;culos por estado</div></div>
+<div class="endpoint"><summary><span class="method POST">POST</span>/vehiculos</summary><div class="desc">Crear veh&iacute;culo<pre>{
+  "tipo":"VAN",
+  "placa":"VAN-001",
+  "modelo":"Mercedes eSprinter",
+  "anio":2023,
+  "capacidadBateria":90.0,
+  "autonomiaMaxima":150.0,
+  "capacidadCarga":1500.0,
+  "numeroAsientos":3
+}</pre></div></div>
+<div class="endpoint"><summary><span class="method PUT">PUT</span>/vehiculos/:id</summary><div class="desc">Actualizar un veh&iacute;culo (mismo body que POST)</div></div>
+<div class="endpoint"><summary><span class="method PUT">PUT</span>/vehiculos/:id/estado</summary><div class="desc">Cambiar estado<pre>{"estado":"EN_RUTA"}</pre></div></div>
+<div class="endpoint"><summary><span class="method DELETE">DELETE</span>/vehiculos/:id</summary><div class="desc">Eliminar un veh&iacute;culo</div></div>
+</div>
+<div class="section">
+<h2>Telemetr&iacute;a</h2>
+<div class="endpoint"><summary><span class="method GET">GET</span>/telemetria/vehiculo/:id</summary><div class="desc">Historial (limite param opcional)</div></div>
+<div class="endpoint"><summary><span class="method GET">GET</span>/telemetria/vehiculo/:id/ultima</summary><div class="desc">&uacute;ltima telemetr&iacute;a</div></div>
+<div class="endpoint"><summary><span class="method POST">POST</span>/telemetria</summary><div class="desc">Registrar telemetr&iacute;a<pre>{
+  "vehiculoId":1,
+  "nivelBateria":75.5,
+  "latitud":20.5288,
+  "longitud":-100.8157,
+  "temperaturaMotor":45.2,
+  "velocidadActual":60.0,
+  "kilometrajeActual":1250.5
+}</pre></div></div>
+</div>
+<div class="section">
+<h2>Rutas</h2>
+<div class="endpoint"><summary><span class="method GET">GET</span>/rutas</summary><div class="desc">Rutas activas</div></div>
+<div class="endpoint"><summary><span class="method GET">GET</span>/rutas/:id</summary><div class="desc">Ruta por ID</div></div>
+<div class="endpoint"><summary><span class="method GET">GET</span>/rutas/:id/entregas</summary><div class="desc">Entregas de la ruta</div></div>
+<div class="endpoint"><summary><span class="method POST">POST</span>/rutas</summary><div class="desc">Crear ruta<pre>{
+  "nombre":"Entregas Zona Centro",
+  "distanciaTotal":15.5,
+  "vehiculoId":1
+}</pre></div></div>
+<div class="endpoint"><summary><span class="method POST">POST</span>/rutas/:id/entregas</summary><div class="desc">Agregar entrega<pre>{
+  "direccionDestino":"Av. Ju&aacute;rez 123",
+  "latitud":20.5288,
+  "longitud":-100.8157,
+  "descripcionPaquete":"Documentos importantes",
+  "pesoKg":2.5
+}</pre></div></div>
+<div class="endpoint"><summary><span class="method PUT">PUT</span>/rutas/:id/asignar</summary><div class="desc"><pre>{"vehiculoId":1}</pre></div></div>
+<div class="endpoint"><summary><span class="method PUT">PUT</span>/rutas/:id/completar</summary><div class="desc">Completar ruta</div></div>
+</div>
+</body>
+</html>
+            """;
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(200, respuesta.length());
             exchange.getResponseBody().write(respuesta.getBytes());
