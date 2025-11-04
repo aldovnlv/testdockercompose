@@ -170,7 +170,7 @@ services:
     container_name: java-sigefve_module
     image: debian:12.1
     ports:
-      - "8585:8585"
+      - "${JAVA_PORT}:8585"
     restart: unless-stopped
     depends_on:
       - postgresql_java
@@ -202,7 +202,7 @@ services:
     image: postgres:14-alpine
     restart: unless-stopped
     ports:
-      - ${JAVA_PORT}:5432
+      - 54302:5432
     volumes:
       - ${PERSISTENCIA_SIGEFVE}/apps/postgres:/var/lib/postgresql/data
     environment:
