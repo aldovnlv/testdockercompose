@@ -76,7 +76,7 @@ public class ControladorVehiculos implements HttpHandler {
                 Map<String, String> params = parsearParametros(exchange.getRequestURI().getQuery());
                 
                 if (params.containsKey("estado")) {
-                    EstadoVehiculo estado = EstadoVehiculo.valueOf(params.get("estado"));
+                    // EstadoVehiculo estado = EstadoVehiculo.valueOf(params.get("estado"));
                     List<VehiculoElectrico> vehiculos = vehiculoServicio.listarVehiculosDisponibles();
                     enviarJSON(exchange, 200, vehiculos);
                 } else {

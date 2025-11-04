@@ -1,7 +1,7 @@
 package com.sigefve.simulador;
 
 import com.sigefve.dao.VehiculoDAO;
-import com.sigefve.enums.EstadoVehiculo;
+// import com.sigefve.enums.EstadoVehiculo;
 import com.sigefve.modelos.Telemetria;
 import com.sigefve.modelos.VehiculoElectrico;
 import com.sigefve.servicios.TelemetriaServicio;
@@ -23,8 +23,8 @@ public class SimuladorTelemetria {
     private final Map<Long, EstadoSimulacion> estadosVehiculos;
     
     // Coordenadas base (Celaya, Guanajuato, Mexico)
-    private static final double LATITUD_BASE = 20.5288;
-    private static final double LONGITUD_BASE = -100.8157;
+    private static final double LATITUD_BASE = 18.85923285;
+    private static final double LONGITUD_BASE = -97.1106537405747;
     private static final double RADIO_OPERACION = 0.1; // ~11 km
 
     public SimuladorTelemetria() {
