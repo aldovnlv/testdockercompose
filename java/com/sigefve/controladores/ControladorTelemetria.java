@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 //import java.time.LocalDate;
 
-import java.lang.reflect.Type;
+// import java.lang.reflect.Type;
 
 public class ControladorTelemetria implements HttpHandler {
     private final TelemetriaServicio telemetriaServicio;
