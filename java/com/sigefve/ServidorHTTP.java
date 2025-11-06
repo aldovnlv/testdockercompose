@@ -32,6 +32,7 @@ public class ServidorHTTP {
         servidor.setExecutor(Executors.newFixedThreadPool(10));
         
         // Registrar controladores
+        servidor.createContext("/", new ControladorInicio());
         servidor.createContext("/vehiculos", new ControladorVehiculos());
         servidor.createContext("/telemetria", new ControladorTelemetria());
         servidor.createContext("/rutas", new ControladorRutas());
@@ -45,7 +46,7 @@ public class ServidorHTTP {
             exchange.getResponseBody().close();
         });
         
-        servidor.createContext("/", new ControladorInicio());
+
         servidor.createContext("/test", exchange -> {
             String respuesta = """
 <!DOCTYPE html>
