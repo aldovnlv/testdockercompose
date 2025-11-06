@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.gson.GsonBuilder;
-import com.sigefve.adapters.LocalDateTimeTypeAdapter;
+import com.sigefve.adaptadores.LocalDateTimeTypeAdapter;
 import java.time.LocalDateTime;
 
 public class ControladorRutas implements HttpHandler {

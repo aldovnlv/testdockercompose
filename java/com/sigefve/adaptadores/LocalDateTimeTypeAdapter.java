@@ -1,4 +1,4 @@
-package com.sigefve.adapters;
+package com.sigefve.adaptadores;
 
 // import com.google.gson.Gson;
 // import com.google.gson.JsonObject;
