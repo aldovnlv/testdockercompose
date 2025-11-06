@@ -45,7 +45,11 @@ public class ControladorInicio implements HttpHandler {
             String metodo = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
             String[] partes = path.split("/");
-
+            for (String string : partes) {
+                System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                System.out.println(string);
+                System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            }
             switch (metodo) {
                 case "GET" -> manejarGET(exchange, partes);
                 case "POST" -> manejarPOST(exchange);
