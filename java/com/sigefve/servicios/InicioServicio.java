@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class HomeServicio {
+public class InicioServicio {
     private final VehiculoDAO vehiculoDAO;
 
-    public HomeServicio() {
+    public InicioServicio() {
         this.vehiculoDAO = new VehiculoDAO();
     }
 

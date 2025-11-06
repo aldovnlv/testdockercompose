@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.sigefve.enums.EstadoVehiculo;
 import com.sigefve.enums.TipoVehiculo;
 import com.sigefve.modelos.*;
-import com.sigefve.servicios.HomeServicio;
+import com.sigefve.servicios.InicioServicio;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -20,12 +20,12 @@ import com.google.gson.GsonBuilder;
 import com.sigefve.adapters.LocalDateTimeTypeAdapter;
 import java.time.LocalDateTime;
 
-public class ControladorHome implements HttpHandler {
-    private final HomeServicio HomeServicio;
+public class ControladorInicio implements HttpHandler {
+    private final InicioServicio InicioServicio;
     private final Gson gson;
 
-    public ControladorHome() {
-        this.HomeServicio = new HomeServicio();
+    public ControladorInicio() {
+        this.InicioServicio = new InicioServicio();
         // this.gson = new Gson();
         this.gson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
@@ -63,7 +63,7 @@ public class ControladorHome implements HttpHandler {
             // GET /vehiculos/:id
             if (partes.length >= 3 && !partes[2].isEmpty()) {
                 Long id = Long.parseLong(partes[2]);
-                Optional<VehiculoElectrico> vehiculo = HomeServicio.obtenerVehiculo(id);
+                Optional<VehiculoElectrico> vehiculo = InicioServicio.obtenerVehiculo(id);
                 
                 if (vehiculo.isPresent()) {
                     enviarJSON(exchange, 200, vehiculo.get());
@@ -77,16 +77,16 @@ public class ControladorHome implements HttpHandler {
                 
                 if (params.containsKey("estado")) {
                     // EstadoVehiculo estado = EstadoVehiculo.valueOf(params.get("estado"));
-                    List<VehiculoElectrico> vehiculos = HomeServicio.listarVehiculosDisponibles();
+                    List<VehiculoElectrico> vehiculos = InicioServicio.listarVehiculosDisponibles();
                     enviarJSON(exchange, 200, vehiculos);
                 } else {
-                    List<VehiculoElectrico> vehiculos = HomeServicio.listarTodosLosVehiculos();
+                    List<VehiculoElectrico> vehiculos = InicioServicio.listarTodosLosVehiculos();
                     enviarJSON(exchange, 200, vehiculos);
                 }
             }
             // GET /vehiculos
             else {
-                List<VehiculoElectrico> vehiculos = HomeServicio.listarTodosLosVehiculos();
+                List<VehiculoElectrico> vehiculos = InicioServicio.listarTodosLosVehiculos();
                 enviarJSON(exchange, 200, vehiculos);
             }
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class ControladorHome implements HttpHandler {
             JsonObject json = gson.fromJson(body, JsonObject.class);
             
             VehiculoElectrico vehiculo = crearVehiculoDesdeJSON(json);
-            Long id = HomeServicio.crearVehiculo(vehiculo);
+            Long id = InicioServicio.crearVehiculo(vehiculo);
             
             JsonObject respuesta = new JsonObject();
             respuesta.addProperty("id", id);
@@ -126,7 +126,7 @@ public class ControladorHome implements HttpHandler {
             // PUT /vehiculos/:id/estado - Cambiar solo el estado
             if (partes.length >= 4 && partes[3].equals("estado")) {
                 String nuevoEstado = json.get("estado").getAsString();
-                HomeServicio.cambiarEstadoVehiculo(id, EstadoVehiculo.valueOf(nuevoEstado));
+                InicioServicio.cambiarEstadoVehiculo(id, EstadoVehiculo.valueOf(nuevoEstado));
                 
                 JsonObject respuesta = new JsonObject();
                 respuesta.addProperty("mensaje", "Estado actualizado exitosamente");
@@ -136,7 +136,7 @@ public class ControladorHome implements HttpHandler {
             else {
                 VehiculoElectrico vehiculo = crearVehiculoDesdeJSON(json);
                 vehiculo.setId(id);
-                HomeServicio.actualizarVehiculo(vehiculo);
+                InicioServicio.actualizarVehiculo(vehiculo);
                 
                 JsonObject respuesta = new JsonObject();
                 respuesta.addProperty("mensaje", "Vehiculo actualizado exitosamente");
@@ -155,7 +155,7 @@ public class ControladorHome implements HttpHandler {
             }
 
             Long id = Long.parseLong(partes[2]);
-            boolean eliminado = HomeServicio.eliminarVehiculo(id);
+            boolean eliminado = InicioServicio.eliminarVehiculo(id);
             
             if (eliminado) {
                 JsonObject respuesta = new JsonObject();

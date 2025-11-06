@@ -1,6 +1,7 @@
 package com.sigefve;
 
 import com.sigefve.config.ConfiguracionBaseDatos;
+import com.sigefve.controladores.ControladorInicio;
 import com.sigefve.controladores.ControladorRutas;
 import com.sigefve.controladores.ControladorTelemetria;
 import com.sigefve.controladores.ControladorVehiculos;
@@ -43,7 +44,9 @@ public class ServidorHTTP {
             exchange.getResponseBody().write(respuesta.getBytes());
             exchange.getResponseBody().close();
         });
-        servidor.createContext("/", exchange -> {
+        
+        servidor.createContext("/", new ControladorInicio());
+        servidor.createContext("/test", exchange -> {
             String respuesta = """
 <!DOCTYPE html>
 <html lang="es">
