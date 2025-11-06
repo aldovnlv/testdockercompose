@@ -75,7 +75,7 @@ public class ControladorInicio implements HttpHandler {
                     enviarError(exchange, 404, "Vehiculo no encontrado");
                 }
             }
-            else if (partes.length==1) {
+            else if (partes.length==2) {
                 String respuesta = """
 <!DOCTYPE html>
 <html lang="es">
