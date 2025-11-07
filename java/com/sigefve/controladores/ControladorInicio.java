@@ -47,7 +47,7 @@ public class ControladorInicio implements HttpHandler {
             String[] partes = path.split("/");
             for (String string : partes) {
                 System.out.println(partes.length + "  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-                System.out.println(string);
+                System.out.println(path);
                 System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             }
             switch (metodo) {
