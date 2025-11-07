@@ -33,9 +33,9 @@ public class ServidorHTTP {
         
         // Registrar controladores
         servidor.createContext("/", new ControladorInicio());
-        // servidor.createContext("/vehiculos", new ControladorVehiculos());
-        // servidor.createContext("/telemetria", new ControladorTelemetria());
-        // servidor.createContext("/rutas", new ControladorRutas());
+        servidor.createContext("/vehiculos", new ControladorVehiculos());
+        servidor.createContext("/telemetria", new ControladorTelemetria());
+        servidor.createContext("/rutas", new ControladorRutas());
         
         // Health check
         servidor.createContext("/health", exchange -> {

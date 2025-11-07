@@ -168,7 +168,6 @@ function cp(t){navigator.clipboard.writeText(t.innerText)}
 </div>
 </body>
 </html>
-
             """;
                 enviarHTML(exchange, 200, respuesta);
             } 
