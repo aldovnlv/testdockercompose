@@ -420,7 +420,7 @@ function cp(t){navigator.clipboard.writeText(t.innerText)}
 
     private void enviarHTML(HttpExchange exchange, int codigo, Object obj) throws IOException {
 
-        String json = gson.toJson(obj);
+        String json = (String)obj;
         exchange.getResponseHeaders().set("Content-Type", "text/html");
         enviarRespuesta(exchange, codigo, json);
     }
