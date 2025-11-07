@@ -188,7 +188,7 @@ function cp(t){navigator.clipboard.writeText(t.innerText)}
             // GET /vehiculos
             else {
                 List<VehiculoElectrico> vehiculos = InicioServicio.listarTodosLosVehiculos();
-                enviarJSON(exchange, 200, vehiculos);
+                enviarHTML(exchange, 200, "vehiculos");
             }
         } catch (Exception e) {
             enviarError(exchange, 500, e.getMessage());
