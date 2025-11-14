@@ -36,6 +36,7 @@ public class SimuladorTelemetria {
     }
 
     public void iniciar() {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      1      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         System.out.println("Iniciando simulador de telemetria...");
         
         // Programar la generacion de telemetria cada 15 segundos
@@ -51,6 +52,7 @@ public class SimuladorTelemetria {
     }
 
     public void detener() {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      2      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         System.out.println("Deteniendo simulador de telemetria...");
         scheduler.shutdown();
         try {
@@ -63,6 +65,7 @@ public class SimuladorTelemetria {
     }
 
     private void generarTelemetriaParaTodos() throws SQLException {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      3      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         List<VehiculoElectrico> vehiculos = vehiculoDAO.obtenerTodos();
         
         for (VehiculoElectrico vehiculo : vehiculos) {
@@ -89,6 +92,7 @@ public class SimuladorTelemetria {
     }
 
     private Telemetria generarTelemetria(VehiculoElectrico vehiculo, EstadoSimulacion estado) {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      4      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         Telemetria telemetria = new Telemetria();
         telemetria.setVehiculoId(vehiculo.getId());
 
@@ -104,6 +108,7 @@ public class SimuladorTelemetria {
     }
 
     private void generarTelemetriaEnRuta(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      5      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         // Velocidad variable segun tipo de vehiculo
         double velocidadMaxima = v.obtenerVelocidadMaxima();
         t.setVelocidadActual(velocidadMaxima * (0.5 + random.nextDouble() * 0.5));
@@ -129,6 +134,7 @@ public class SimuladorTelemetria {
     }
 
     private void generarTelemetriaCargando(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      6      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         t.setVelocidadActual(0);
         
         // Incremento de bateria (2% - 5% cada 15 segundos)
@@ -149,6 +155,7 @@ public class SimuladorTelemetria {
     }
 
     private void generarTelemetriaMantenimiento(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      7      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         t.setVelocidadActual(0);
         t.setNivelBateria(e.nivelBateria);
         t.setKilometrajeActual(e.kilometraje);
@@ -162,6 +169,7 @@ public class SimuladorTelemetria {
     }
 
     private void generarTelemetriaDisponible(Telemetria t, VehiculoElectrico v, EstadoSimulacion e) {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      8      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         t.setVelocidadActual(0);
         
         // Bateria estable o carga lenta
@@ -181,6 +189,7 @@ public class SimuladorTelemetria {
     }
 
     private void actualizarUbicacion(EstadoSimulacion estado) {
+        System.out.println(" >>>>>>>>>>>>>>>>>>>>      9      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         // Movimiento aleatorio dentro del radio de operacion
         double angulo = random.nextDouble() * 2 * Math.PI;
         double distancia = random.nextDouble() * 0.002; // ~200 metros
