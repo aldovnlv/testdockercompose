@@ -13,7 +13,7 @@ public class ClienteAPI {
 
     private String urlBaseSigefve = "https://tapython.xipatlani.tk/";
 
-    public void post1(String endpoint, String cuerpoJson){
+    public void peticionPost(String endpoint, String cuerpoJson){
         // Create an HttpClient instance
         HttpClient client = HttpClient.newHttpClient();
         String direccionAPI = urlBaseSigefve+endpoint;
@@ -49,7 +49,7 @@ public class ClienteAPI {
         //                 "        id_vehiculo = telemetria.get('id_vehiculo')\r\n" + //
         //                 "        nivel_bateria = telemetria.get('nivel_bateria', 100)\r\n" + //
         //                 "        temperatura = telemetria.get('temperatura_motor', 0)"
-        cliente.post1("telemetria", cuerpoJson);
+        cliente.peticionPost("telemetria", cuerpoJson);
         
     }
 }

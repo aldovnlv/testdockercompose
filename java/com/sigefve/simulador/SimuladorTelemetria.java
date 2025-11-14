@@ -1,5 +1,7 @@
 package com.sigefve.simulador;
 
+import com.sigefve.adaptadores.ClienteAPI;
+
 import com.sigefve.dao.VehiculoDAO;
 // import com.sigefve.enums.EstadoVehiculo;
 import com.sigefve.modelos.Telemetria;
@@ -26,6 +28,7 @@ public class SimuladorTelemetria {
     private static final double LATITUD_BASE = 18.85923285;
     private static final double LONGITUD_BASE = -97.1106537405747;
     private static final double RADIO_OPERACION = 0.1; // ~11 km
+    private ClienteAPI peticion = new ClienteAPI();
 
     public SimuladorTelemetria() {
         this.telemetriaServicio = new TelemetriaServicio();
@@ -76,6 +79,8 @@ public class SimuladorTelemetria {
             
             Telemetria telemetria = generarTelemetria(vehiculo, estado);
             telemetriaServicio.registrarTelemetria(telemetria);
+            String json = "{\n    \"id_vehiculo\":9876,\n    \"nivel_bateria\":100,\n    \"temperatura\":50}";
+            //peticion.peticionPost("telemetria", "");
             
             // Log periodico cada minuto (cada 4 ciclos de 15s)
             if (estado.ciclos % 4 == 0) {
