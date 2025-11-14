@@ -8,8 +8,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.util.concurrent.CompletableFuture;
+import java.lang.System;
+
 public class TelemetriaDAO {
     private final ConfiguracionBaseDatos config;
+    private String urlBaseSigefve = "https://tapython.xipatlani.tk/";
 
     public TelemetriaDAO() {
         this.config = ConfiguracionBaseDatos.obtenerInstancia();
@@ -39,9 +48,24 @@ public class TelemetriaDAO {
                 if (generatedKeys.next()) {
                     Long id = generatedKeys.getLong(1);
                     telemetria.setId(id);
+
+                    String cuerpoJson = String.format("""
+{
+    \"id_vehiculo\":%d,
+    \"nivel_bateria\":%d,
+    \"temperatura\":%d
+}
+        """, telemetria.getVehiculoId(), telemetria.getNivelBateria(), telemetria.getTemperaturaMotor());
+                    // "telemetria = evento.get('telemetria', {})\r\n" + //
+                    //                 "        id_vehiculo = telemetria.get('id_vehiculo')\r\n" + //
+                    //                 "        nivel_bateria = telemetria.get('nivel_bateria', 100)\r\n" + //
+                    //                 "        temperatura = telemetria.get('temperatura_motor', 0)"
+                    post1("telemetria", cuerpoJson);
                     return id;
                 }
             }
+
+
         }
         return null;
     }
@@ -127,5 +151,27 @@ public class TelemetriaDAO {
         t.setKilometrajeActual(rs.getDouble("kilometraje_actual"));
         t.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime());
         return t;
+    }
+
+    public void post1(String endpoint, String cuerpoJson){
+        // Create an HttpClient instance
+        HttpClient client = HttpClient.newHttpClient();
+        String direccionAPI = urlBaseSigefve+endpoint;
+        // Create a HttpRequest
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(direccionAPI))
+                .header("Content-Type", "application/json")
+                .POST(BodyPublishers.ofString(cuerpoJson))
+                .build();
+
+        // Send the request asynchronously
+
+        CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Peticion a "+direccionAPI);
+        System.out.println("Contenido:\n"+cuerpoJson);
+        // Handle the response
+        responseFuture.thenApply(HttpResponse::body)
+                      .thenAccept(System.out::println)
+                      .join(); // Wait for the response
     }
 }

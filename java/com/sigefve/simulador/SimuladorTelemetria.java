@@ -28,17 +28,11 @@ public class SimuladorTelemetria {
     private static final double RADIO_OPERACION = 0.1; // ~11 km
 
     public SimuladorTelemetria() {
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>      A      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         this.telemetriaServicio = new TelemetriaServicio();
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>      B      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         this.vehiculoDAO = new VehiculoDAO();
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>      C      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         this.scheduler = Executors.newScheduledThreadPool(2);
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>      D      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         this.random = new Random();
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>      E      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         this.estadosVehiculos = new HashMap<>();
-        System.out.println(" >>>>>>>>>>>>>>>>>>>>      F      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     }
 
     public void iniciar() {
