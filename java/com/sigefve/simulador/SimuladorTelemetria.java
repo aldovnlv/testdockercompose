@@ -1,5 +1,6 @@
 package com.sigefve.simulador;
 
+import com.sigefve.adaptadores.ClienteAPI;
 import com.sigefve.dao.VehiculoDAO;
 // import com.sigefve.enums.EstadoVehiculo;
 import com.sigefve.modelos.Telemetria;
@@ -76,6 +77,23 @@ public class SimuladorTelemetria {
             
             Telemetria telemetria = generarTelemetria(vehiculo, estado);
             telemetriaServicio.registrarTelemetria(telemetria);
+
+            ClienteAPI cliente=new ClienteAPI();
+            String cuerpoJson = String.format("""
+{
+    \"id_vehiculo\"%d,
+    \"nivel_bateria\"%d,
+    \"temperatura\"%d
+}
+        """, telemetria.getNivelBateria(),
+                    telemetria.getTemperaturaMotor(),
+                    telemetria.getKilometrajeActual()
+                );
+        // "telemetria = evento.get('telemetria', {})\r\n" + //
+        //                 "        id_vehiculo = telemetria.get('id_vehiculo')\r\n" + //
+        //                 "        nivel_bateria = telemetria.get('nivel_bateria', 100)\r\n" + //
+        //                 "        temperatura = telemetria.get('temperatura_motor', 0)"
+        cliente.post1("telemetria", cuerpoJson);
             
             // Log periodico cada minuto (cada 4 ciclos de 15s)
             if (estado.ciclos % 4 == 0) {
