@@ -79,7 +79,7 @@ public class SimuladorTelemetria {
             
             Telemetria telemetria = generarTelemetria(vehiculo, estado);
             telemetriaServicio.registrarTelemetria(telemetria);
-            String json = "{\n    \"id_vehiculo\":"+telemetria.getId()+",\n    \"nivel_bateria\":"+telemetria.getNivelBateria()+",\n    \"temperatura\":"+telemetria.getTemperaturaMotor()+"}";
+            String json = "{\n    \"id_vehiculo\":"+vehiculo.getId()+",\n    \"nivel_bateria\":"+telemetria.getNivelBateria()+",\n    \"temperatura\":"+telemetria.getTemperaturaMotor()+"}";
             peticion.peticionPost("telemetria", json);
             
             // Log periodico cada minuto (cada 4 ciclos de 15s)
