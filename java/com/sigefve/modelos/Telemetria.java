@@ -36,7 +36,7 @@ public class Telemetria {
     public Long getVehiculoId() { return vehiculoId; }
     public void setVehiculoId(Long vehiculoId) { this.vehiculoId = vehiculoId; }
     
-    public double getNivelBateria() { return nivelBateria; }
+    public double getNivelBateria() { return Math.round(nivelBateria*100.0)/100.00; }
     public void setNivelBateria(double nivelBateria) { this.nivelBateria = nivelBateria; }
     
     public double getLatitud() { return latitud; }
@@ -45,13 +45,13 @@ public class Telemetria {
     public double getLongitud() { return longitud; }
     public void setLongitud(double longitud) { this.longitud = longitud; }
     
-    public double getTemperaturaMotor() { return temperaturaMotor; }
+    public double getTemperaturaMotor() { return Math.round(temperaturaMotor*100.0)/100.0; }
     public void setTemperaturaMotor(double temperaturaMotor) { this.temperaturaMotor = temperaturaMotor; }
     
-    public double getVelocidadActual() { return velocidadActual; }
+    public double getVelocidadActual() { return Math.round(velocidadActual*100.0)/100.0; }
     public void setVelocidadActual(double velocidadActual) { this.velocidadActual = velocidadActual; }
     
-    public double getKilometrajeActual() { return kilometrajeActual; }
+    public double getKilometrajeActual() { return Math.round(kilometrajeActual*100.0)/100.0; }
     public void setKilometrajeActual(double kilometrajeActual) { this.kilometrajeActual = kilometrajeActual; }
     
     public LocalDateTime getTimestamp() { return timestamp; }
