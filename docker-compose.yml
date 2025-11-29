@@ -177,7 +177,7 @@ services:
       - "${JAVA_PORT}:8585"
     restart: unless-stopped
     depends_on:
-      - postgresql_java
+      - postgresql_java_test
     command:
       - /bin/bash
       - -c
