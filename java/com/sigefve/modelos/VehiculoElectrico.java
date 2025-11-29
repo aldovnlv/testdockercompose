@@ -31,5 +31,5 @@ public abstract class VehiculoElectrico extends Vehiculo {
     public void setAutonomiaMaxima(double autonomiaMaxima) { this.autonomiaMaxima = autonomiaMaxima; }
     
     public double getConsumoPromedio() { return consumoPromedio; }
-    public void setConsumoPromedio(double consumoPromedio) { this.consumoPromedio = consumoPromedio; }
+    public void setConsumoPromedio(double consumoPromedio) { this.consumoPromedio = Math.round(consumoPromedio*100.0)/100.0; }
 }
