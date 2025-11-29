@@ -206,7 +206,7 @@ services:
     image: postgres:14-alpine
     restart: unless-stopped
     ports:
-      - 54302:5432
+      - 54303:5432
     volumes:
       - ${PERSISTENCIA_SIGEFVE}/apps/postgres:/var/lib/postgresql/data
     environment:
