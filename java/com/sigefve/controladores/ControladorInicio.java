@@ -24,6 +24,9 @@ public class ControladorInicio implements HttpHandler {
     private final InicioServicio InicioServicio;
     private final Gson gson;
 
+    /**
+     * 
+     */
     public ControladorInicio() {
         this.InicioServicio = new InicioServicio();
         // this.gson = new Gson();

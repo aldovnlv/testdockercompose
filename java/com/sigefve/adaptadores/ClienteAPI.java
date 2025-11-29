@@ -13,28 +13,37 @@ public class ClienteAPI {
 
     private String urlBaseSigefve = "https://tapython.xipatlani.tk/";
 
+    /**
+     * 
+     * @param endpoint
+     * @param cuerpoJson
+     */
     public void peticionPost(String endpoint, String cuerpoJson){
-        // Create an HttpClient instance
-        HttpClient client = HttpClient.newHttpClient();
+        // Crear una instancia de HttpClient
+        HttpClient cliente = HttpClient.newHttpClient();
         String direccionAPI = urlBaseSigefve+endpoint;
-        // Create a HttpRequest
-        HttpRequest request = HttpRequest.newBuilder()
+        // Crear una HttpRequest
+        HttpRequest peticion = HttpRequest.newBuilder()
                 .uri(URI.create(direccionAPI))
                 .header("Content-Type", "application/json")
                 .POST(BodyPublishers.ofString(cuerpoJson))
                 .build();
 
-        // Send the request asynchronously
+        // Enviar la peticion asincronamente
 
-        CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        CompletableFuture<HttpResponse<String>> respuestaFutura = cliente.sendAsync(peticion, HttpResponse.BodyHandlers.ofString());
         System.out.println("Peticion a "+direccionAPI);
         System.out.println("Contenido:\n"+cuerpoJson);
-        // Handle the response
-        responseFuture.thenApply(HttpResponse::body)
+        // Manejar la respuesta
+        respuestaFutura.thenApply(HttpResponse::body)
                       .thenAccept(System.out::println)
-                      .join(); // Wait for the response
+                      .join(); // Esperar por la respuesta
     }
 
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         ClienteAPI cliente = new ClienteAPI();
 
