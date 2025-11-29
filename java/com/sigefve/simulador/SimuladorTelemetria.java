@@ -86,7 +86,7 @@ public class SimuladorTelemetria {
             
             // Log periodico cada minuto (cada 4 ciclos de 15s)
             if (estado.ciclos % 4 == 0) {
-                System.out.printf("[%s] Bateria: %.1f%% | Temp: %.1f C | Km: %.2f%n",
+                System.out.printf("[%s] Bateria: %.6f%% | Temp: %.6f C | Km: %.2f%n",
                     vehiculo.getPlaca(),
                     telemetria.getNivelBateria(),
                     telemetria.getTemperaturaMotor(),
