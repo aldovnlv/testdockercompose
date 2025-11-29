@@ -200,9 +200,9 @@ services:
     volumes:
       - ${SIGEFVE_VOLUMES}/java:/root/java
 
-  postgresql_java:
-    hostname: postgresql_java
-    container_name: postgresql_java
+  postgresql_java_test:
+    hostname: postgresql_java_test
+    container_name: postgresql_java_test
     image: postgres:14-alpine
     restart: unless-stopped
     ports:
