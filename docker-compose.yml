@@ -234,6 +234,8 @@ services:
         pwd
         ls -la
         echo instalando =======================================================
+        apt update
+        apt install -y npm
         npm install
         npm start
         tail -F continue
