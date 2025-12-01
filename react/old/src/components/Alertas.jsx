@@ -4,39 +4,33 @@ import { apiFetch } from "../auth/api";
 export default function Alertas() {
   const [alertas, setAlertas] = useState([]);
   const [visible, setVisible] = useState(false);
-  const lastAlertId = useRef(null); // Detectar alertas nuevas
+  const lastAlertId = useRef(null); // Para detectar alertas nuevas
 
-  // Cargar alertas desde el API Gateway
+  // 🔥 Cargar alertas desde API real
   async function cargarAlertas() {
-    try {
-      const data = await apiFetch("/python/alertas");
+    const data = await apiFetch("https://apisigefve.xipatlani.tk/alertas");
 
-      if (!data || !Array.isArray(data) || data.length === 0) {
-        return;
-      }
+    if (!data || data.length === 0) return;
 
-      setAlertas(data);
+    setAlertas(data);
 
-      const alertaReciente = data[0];
+    // Detectar si hay alerta nueva
+    const alertaReciente = data[0];
 
-      // Solo mostrar si es una alerta nueva
-      if (alertaReciente.id !== lastAlertId.current) {
-        lastAlertId.current = alertaReciente.id;
+    if (alertaReciente.id !== lastAlertId.current) {
+      lastAlertId.current = alertaReciente.id;
 
-        setVisible(true);
+      // Mostrar popup
+      setVisible(true);
 
-        // Ocultar en 4 segundos
-        setTimeout(() => setVisible(false), 4000);
-      }
-
-    } catch (err) {
-      console.error("Error cargando alertas:", err);
+      // Ocultar en 4 segundos
+      setTimeout(() => setVisible(false), 4000);
     }
   }
 
-  //Cargar alertas cada 8 segundos
+  // 🔄 Recargar alertas automáticamente cada 8 segundos
   useEffect(() => {
-    cargarAlertas(); // Al inicio
+    cargarAlertas(); // carga al inicio
 
     const interval = setInterval(() => {
       cargarAlertas();
@@ -45,11 +39,12 @@ export default function Alertas() {
     return () => clearInterval(interval);
   }, []);
 
+  // 🛑 Si no hay alertas aún
   const ultima = alertas.length > 0 ? alertas[0] : null;
 
   return (
     <div style={{ position: "relative" }}>
-      {/* Icono campana */}
+      {/* Ícono campana */}
       <button
         onClick={() => setVisible((v) => !v)}
         style={{
@@ -59,7 +54,7 @@ export default function Alertas() {
           fontSize: "20px",
         }}
       >
-        {alertas.length}
+        🔔 {alertas.length}
       </button>
 
       {/* Popup */}

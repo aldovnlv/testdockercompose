@@ -9,6 +9,7 @@ export default function FormRutas() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validación básica antes de enviar
     if (!origen.trim() || !destino.trim() || !fecha) {
       alert("Todos los campos son obligatorios.");
       return;
@@ -17,8 +18,9 @@ export default function FormRutas() {
     await guardarRuta();
   };
 
+  // 🔥 Guardar ruta en tu API real
   async function guardarRuta() {
-    const data = await apiFetch("/python/telemetria", {
+    const data = await apiFetch("https://apisigefve.xipatlani.tk/rutas", {
       method: "POST",
       body: JSON.stringify({
         origen,
@@ -28,8 +30,9 @@ export default function FormRutas() {
     });
 
     if (data) {
-      alert("Ruta guardada correctamente!");
+      alert("Ruta guardada correctamente");
 
+      // Limpiar formulario
       setOrigen("");
       setDestino("");
       setFecha("");
@@ -42,6 +45,7 @@ export default function FormRutas() {
 
       <form onSubmit={handleSubmit}>
 
+        {/* Origen */}
         <input
           type="text"
           className="w-full mb-3 border p-2 rounded"
@@ -50,6 +54,7 @@ export default function FormRutas() {
           onChange={(e) => setOrigen(e.target.value)}
         />
 
+        {/* Destino */}
         <input
           type="text"
           className="w-full mb-3 border p-2 rounded"
@@ -58,6 +63,7 @@ export default function FormRutas() {
           onChange={(e) => setDestino(e.target.value)}
         />
 
+        {/* Fecha */}
         <input
           type="date"
           className="w-full mb-3 border p-2 rounded"

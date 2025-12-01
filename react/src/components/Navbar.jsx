@@ -1,31 +1,28 @@
 import React from "react";
 import { useAuth } from "../auth/AuthContext";
-import Alertas from "./Alertas";
 
 export default function NavBar() {
   const { logout } = useAuth();
 
   return (
-    <div className="w-full bg-gray-800 flex justify-between items-center px-4 py-3 text-white shadow-md">
+    <div className="w-full bg-white shadow flex justify-between px-6 py-4 items-center">
 
-      {/* Título */}
-      <h1 className="text-xl font-bold tracking-wide">
-        Fleet Dashboard
-      </h1>
+      <h1 className="text-xl font-bold">SIGEFVE - Dashboard</h1>
 
-      {/* Alertas */}
-      <div className="flex items-center gap-4">
-        <Alertas />
+      <div className="flex gap-5 items-center">
 
-        {/* Botón Salir */}
+        <span className="font-semibold text-gray-700">
+          {localStorage.getItem("username") || "usuario"}
+        </span>
+
         <button
           onClick={logout}
-          className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 transition"
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
         >
-          Salir
+          Cerrar sesión
         </button>
-      </div>
 
+      </div>
     </div>
   );
 }

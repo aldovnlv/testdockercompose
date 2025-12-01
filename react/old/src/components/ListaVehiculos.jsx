@@ -6,18 +6,13 @@ import { apiFetch } from "../auth/api";
 export default function ListaVehiculos({ onSelect }) {
   const [vehiculos, setVehiculos] = useState([]);
 
-  // Cargar vehículos desde API
+  // Cargar lista de vehículos desde API
   useEffect(() => {
     async function cargarVehiculos() {
-      try {
-        const data = await apiFetch("/java/vehiculos");
+      const data = await apiFetch("https://apisigefve.xipatlani.tk/vehiculos");
 
-
-        if (Array.isArray(data)) {
-          setVehiculos(data);
-        }
-      } catch (error) {
-        console.error("Error cargando vehículos:", error);
+      if (data) {
+        setVehiculos(data);
       }
     }
 

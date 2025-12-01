@@ -1,32 +1,22 @@
-export async function apiFetch(url, options = {}) {
+// src/auth/api.js
+export async function apiFetch(endpoint, options = {}) {
   const token = localStorage.getItem("token");
 
-  const finalOptions = {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-      ...(options.headers || {})
-    }
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
   };
 
   try {
-    const response = await fetch(url, finalOptions);
+    const response = await fetch(endpoint, {
+      ...options,
+      headers
+    });
 
-    // Si el token expiró o es inválido → API manda 401
-    if (response.status === 401 || response.status === 403) {
-      alert("Tu sesión expiró. Inicia sesión nuevamente.");
-      localStorage.removeItem("token");
-      window.location.href = "/";
-      return null;
-    }
-
-    const data = await response.json();
-    return data;
+    return await response.json();
 
   } catch (error) {
     console.error("Error en apiFetch:", error);
-    alert("No se pudo conectar con el servidor.");
     return null;
   }
 }

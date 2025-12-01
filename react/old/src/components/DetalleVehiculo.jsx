@@ -8,15 +8,11 @@ export default function DetalleVehiculo({ vehiculo, onBack }) {
     async function cargarDetalle() {
       if (!vehiculo) return;
 
-      try {
-        const data = await apiFetch(`/java/vehiculos/${vehiculo.id}`);
+      const data = await apiFetch(
+        `https://apisigefve.xipatlani.tk/vehiculos/${vehiculo.id}`
+      );
 
-        if (data) {
-          setDetalle(data);
-        }
-      } catch (error) {
-        console.error("Error cargando detalle del vehículo:", error);
-      }
+      if (data) setDetalle(data);
     }
 
     cargarDetalle();

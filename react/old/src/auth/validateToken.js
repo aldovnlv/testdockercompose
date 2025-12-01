@@ -1,8 +1,8 @@
 // validateToken.js
 // Valida el token intentando llamar a un endpoint REAL protegido.
 
-const TEST_URL = "/users"; 
-// Usa un endpoint que SÍ esté protegido y requiera token
+const TEST_URL = "https://apisigefve.xipatlani.tk/vehiculos"; 
+// 🔥 Usa un endpoint que SÍ esté protegido y requiera token
 
 export async function validateToken() {
   const token = localStorage.getItem("token");
@@ -13,7 +13,7 @@ export async function validateToken() {
     const response = await fetch(TEST_URL, {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`, // API usa JWT
+        "Authorization": `Bearer ${token}`, // 👈 tu API usa JWT
       },
     });
 

@@ -6,8 +6,7 @@ export default function Estadisticas() {
 
   useEffect(() => {
     async function cargarStats() {
-      const data = await apiFetch("/python/estadisticas");
-
+      const data = await apiFetch("https://apisigefve.xipatlani.tk/estadisticas");
       if (data) setStats(data);
     }
 

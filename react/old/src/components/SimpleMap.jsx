@@ -9,7 +9,7 @@ export default function SimpleMap() {
   // Cargar vehículos desde API
   useEffect(() => {
     async function cargarMapa() {
-      const data = await apiFetch("/java/vehiculos");
+      const data = await apiFetch("https://apisigefve.xipatlani.tk/vehiculos");
 
       if (data) {
         setVehiculos(data);
@@ -31,7 +31,7 @@ export default function SimpleMap() {
           key={i}
           className="absolute bg-red-500 w-4 h-4 rounded-full"
           style={{
-            top: v.y || 20 + i * 30, 
+            top: v.y || 20 + i * 30, // Coordenadas simuladas
             left: v.x || 40 + i * 40,
           }}
           title={v.nombre || v.id}
