@@ -213,5 +213,24 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=sigefve
+
+  frontend-react-test:
+    hostname: frontend-react-test
+    container_name: frontend-react-test
+    image: node:18-alpine
+    restart: unless-stopped
+    ports:
+      - 3010:3000
+    volumes:
+      - ${PERSISTENCIA_SIGEFVE}/react:/root/react
+    command:
+      - /bin/bash
+      - -c
+      - |
+        export DEBIAN_FRONTEND=noninteractive
+        ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
+        cd /root/react
+        npm start
+
 volumes:
   mysql_data:
