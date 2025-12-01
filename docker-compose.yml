@@ -230,6 +230,7 @@ services:
         export DEBIAN_FRONTEND=noninteractive
         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
         cd /root/react
+        npm install
         npm start
 
 volumes:
