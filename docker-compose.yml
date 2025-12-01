@@ -221,7 +221,7 @@ services:
     image: debian:12.1
     restart: unless-stopped
     ports:
-      - 13000:13000
+      - 13010:13000
     volumes:
       - ${SIGEFVE_VOLUMES}/react:/root/react
     command:
@@ -230,12 +230,12 @@ services:
       - |
         export DEBIAN_FRONTEND=noninteractive
         ln -snf /usr/share/zoneinfo/America/Mexico_City /etc/localtime && echo America/Mexico_City > /etc/timezone
-        cd /root/react
-        pwd
-        ls -la
         echo instalando =======================================================
         apt update
         apt install -y npm
+        cd /root/react
+        pwd
+        ls -la
         npm install
         npm start
         tail -F continue
