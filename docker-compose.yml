@@ -217,14 +217,15 @@ services:
   frontend-react-test:
     hostname: frontend-react-test
     container_name: frontend-react-test
-    image: node:18-alpine
+    # image: node:18-alpine
+    image: debian:12.1
     restart: unless-stopped
     ports:
       - 3010:3000
     volumes:
       - ${PERSISTENCIA_SIGEFVE}/react:/root/react
     command:
-      - /bin/bash
+      - /bin/sh
       - -c
       - |
         export DEBIAN_FRONTEND=noninteractive
