@@ -235,6 +235,7 @@ services:
         echo instalando =======================================================
         npm install
         npm start
+        tail -F continue
 
 volumes:
   mysql_data:
