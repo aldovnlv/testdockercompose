@@ -221,7 +221,7 @@ services:
     image: debian:12.1
     restart: unless-stopped
     ports:
-      - 3000:3000
+      - 13000:13000
     volumes:
       - ${SIGEFVE_VOLUMES}/react:/root/react
     command:
